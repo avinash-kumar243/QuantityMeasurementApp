@@ -1,3 +1,3 @@
 # QuantityMeasurementApp
 This is about QuantityMeasurementApp
-dev
+feature/UC1-FeetEquality
