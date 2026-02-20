@@ -3,4 +3,17 @@
   <groupId>com.app</groupId>
   <artifactId>QuantityMeasurementApp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+   <dependencies>
+      
+      <!-- JUnit 5 Dependency -->
+      <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <version>5.10.2</version>
+          <scope>test</scope>
+      </dependency>
+
+  </dependencies>
+  
 </project>
