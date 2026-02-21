@@ -27,17 +27,45 @@ public class QuantityMeasurementApp {
 		}
 	}
 	
+	
+	public static class Inches {
+		private final double inch;
+		
+		public Inches(double inch) {
+			this.inch = inch;
+		}
+		
+		
+		@Override
+		public boolean equals(Object obj) {
+			if(this == obj) return true;
+			
+			if(obj == null || this.getClass() != obj.getClass()) {
+				return false; 
+			}
+			
+			return Double.compare(this.inch, ((Inches)obj).inch) == 0; 
+		}
+	}
+	
+	public static void demonstrateFeetEquality() {
+		Feet feet1 = new Feet(1.0);
+		Feet feet2 = new Feet(1.0);
+		
+		boolean isEqual = feet1.equals(feet2);
+		System.out.println("Equal (" + isEqual +  ")");  
+	}
+	
+	public static void demonstrateInchEquality() {
+		Inches inch1 = new Inches(1.0);
+		Inches inch2 = new Inches(1.0);
+		
+		boolean isEqual = inch1.equals(inch2);
+		System.out.println("Equal (" + isEqual + ")"); 
+	}
+	
 	public static void main(String args[]) {
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.println("Enter 2 feet: ");
-		
-		double input1 = sc.nextDouble();
-		double input2 = sc.nextDouble();
-		
-		Feet feet1 = new Feet(input1);
-		Feet feet2 = new Feet(input2);
-		
-		System.out.println("Equal (" + feet1.equals(feet2) + ")"); 
+		demonstrateFeetEquality();
+		demonstrateInchEquality();
 	}
 }
