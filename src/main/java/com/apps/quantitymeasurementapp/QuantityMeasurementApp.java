@@ -1,71 +1,45 @@
 package com.apps.quantitymeasurementapp;
 
-import java.util.Scanner;
+import com.apps.quantitymeasurementapp.Length.LengthUnit;
 
 public class QuantityMeasurementApp {
 	
-	public static class Feet {
-		private final double feet;
+	// Create a generic method to demonstrate Length equality check
+	public static boolean demonstrateLengthEquality(Length length1, Length length2) {
+		if(length1 == null || length2 == null) {
+			return false;
+		}
 		
-		public Feet(double feet) {
-			this.feet = feet;
-		}
-
-
-		@Override
-		public boolean equals(Object obj) {
-			// Same object reference
-			if(this == obj) return true;
-			 
-			// Null Pointer
-			if(obj == null || this.getClass() != obj.getClass()) {
-				return false;
-			}
-			
-			// Compare double values safety
-			return Double.compare(this.feet, ((Feet)obj).feet) == 0; 
-		}
+		return length1.equals(length2); 
 	}
 	
-	
-	public static class Inches {
-		private final double inch;
-		
-		public Inches(double inch) {
-			this.inch = inch;
-		}
-		
-		
-		@Override
-		public boolean equals(Object obj) {
-			if(this == obj) return true;
-			
-			if(obj == null || this.getClass() != obj.getClass()) {
-				return false; 
-			}
-			
-			return Double.compare(this.inch, ((Inches)obj).inch) == 0; 
-		}
-	}
-	
+	// Create a static method to demonstrate Feet equality check
 	public static void demonstrateFeetEquality() {
-		Feet feet1 = new Feet(1.0);
-		Feet feet2 = new Feet(1.0);
+		Length length1 = new Length(2.0, LengthUnit.FEET); 
+		Length length2 = new Length(2.0, LengthUnit.FEET); 
 		
-		boolean isEqual = feet1.equals(feet2);
-		System.out.println("Equal (" + isEqual +  ")");  
+		System.out.println("Feet Equality: " + demonstrateLengthEquality(length1, length2));
+	} 
+	
+	// Create a static method to demonstrate Inch equality check
+	public static void demonstrateInchEquality() {
+		Length length1 = new Length(12.0, LengthUnit.INCHES);
+		Length length2 = new Length(12.0, LengthUnit.INCHES);
+		
+		System.out.println("Inches Equality: " + demonstrateLengthEquality(length1, length2));
 	}
 	
-	public static void demonstrateInchEquality() {
-		Inches inch1 = new Inches(1.0);
-		Inches inch2 = new Inches(1.0);
-		
-		boolean isEqual = inch1.equals(inch2);
-		System.out.println("Equal (" + isEqual + ")"); 
+	// Create a static method to demonstrate Feet and Inches comparison
+	public static void demonstrateFeetInchesComparison() {
+		Length length1 = new Length(2.0, LengthUnit.FEET); 
+		Length length2 = new Length(24.0, LengthUnit.INCHES);
+
+		System.out.println("Feet-Inches Comparison: " + demonstrateLengthEquality(length1, length2));
 	}
 	
 	public static void main(String args[]) {
 		demonstrateFeetEquality();
 		demonstrateInchEquality();
+		demonstrateFeetInchesComparison();
 	}
 }
