@@ -1,3 +1,3 @@
 # QuantityMeasurementApp
 This is about QuantityMeasurementApp
-feature/UC3-FeetEquality
+feature/UC4-YardEquality
