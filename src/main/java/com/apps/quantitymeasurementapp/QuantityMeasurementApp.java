@@ -51,9 +51,9 @@ public class QuantityMeasurementApp {
 	
 	
 	// Demonstrate Length Comparison between two Length Instances
-	public static boolean demonstrateLengthComparison(Length length1, Length length2) {
+	public static boolean demonstrateLengthComparison(Length length1, Length length2) throws InvalidUnitMeasurementException {
 		if(length1 == null || length2 == null) {
-			return false;
+			throw new InvalidUnitMeasurementException("Length can't be null");
 		}
 		
 		return length1.compareTo(length2) > 0; 
@@ -61,13 +61,13 @@ public class QuantityMeasurementApp {
 	
 	
 	// Demonstrate Length Conversion from one Quantity Length instance to another Length unit
-	public static Length demonstrateLengthConversion(Length length, LengthUnit toUnit) {
+	public static Length demonstrateLengthConversion(Length length, LengthUnit toUnit) throws InvalidUnitMeasurementException {
 		if(length == null) {
-			throw new IllegalArgumentException("Length can't be null");
+			throw new InvalidUnitMeasurementException("Length can't be null");
 		}
 		
 		if(toUnit == null) {
-			throw new IllegalArgumentException("Target unit can't be null");
+			throw new InvalidUnitMeasurementException("Target unit can't be null");
 		}
 		
 		return length.convertTo(toUnit); 
@@ -75,11 +75,16 @@ public class QuantityMeasurementApp {
 	
 	
 	// Demonstrate length conversion from one QuantityLength instance to another unit
-	public static Length demonstrateLengthConversion(double data, LengthUnit unit1, LengthUnit unit2) {
-		if(unit1 == null || unit2 == null) {
-			throw new IllegalArgumentException("UnitLength can't be null");
+	public static Length demonstrateLengthConversion(Double val, LengthUnit unit1, LengthUnit unit2) throws InvalidUnitMeasurementException {
+		
+		if(val == null) {
+			throw new InvalidUnitMeasurementException("Value can't be null");
 		}
-		Length length = new Length(data, unit1);
+		if(unit1 == null || unit2 == null) {
+			throw new InvalidUnitMeasurementException("UnitLength can't be null");
+		}
+		
+		Length length = new Length(val, unit1);
 		
 		return length.convertTo(unit2); 
 	}
@@ -107,19 +112,23 @@ public class QuantityMeasurementApp {
 		
 //		------------- Length Conversion ------------
 		
-		// Convert FEET to INCHES
-		System.out.println("\nConvert 1.0 Feet to Inches: " + demonstrateLengthConversion(1.0, LengthUnit.FEET, LengthUnit.INCHES).getValue());
-		
-		// Convert YARDS to FEET
-		System.out.println("Convert 3.0 Yards to Feet: " + demonstrateLengthConversion(3.0, LengthUnit.YARDS, LengthUnit.FEET).getValue());
-		
-		// Convert INCHES to YARDS
-		System.out.println("Convert 36.0 Inches to Yards: " + demonstrateLengthConversion(36.0, LengthUnit.INCHES, LengthUnit.YARDS).getValue());
-		
-		//Convert CENTIMETERS to INCHES
-		System.out.println("Convert 1.0 Centimeters to Inches: " + demonstrateLengthConversion(1.0, LengthUnit.CENTIMETERS, LengthUnit.INCHES).getValue());
-		
-		// Convert FEET to INCHES
-		System.out.println("Convert 0.0 Feet to Inches: " + demonstrateLengthConversion(0.0, LengthUnit.FEET, LengthUnit.INCHES).getValue());
+		try {
+			// Convert FEET to INCHES
+			System.out.println("\nConvert 1.0 Feet to Inches: " + demonstrateLengthConversion(1.0, LengthUnit.FEET, LengthUnit.INCHES).getValue());
+			
+			// Convert YARDS to FEET
+			System.out.println("Convert 3.0 Yards to Feet: " + demonstrateLengthConversion(3.0, LengthUnit.YARDS, LengthUnit.FEET).getValue());
+			
+			// Convert INCHES to YARDS
+			System.out.println("Convert 36.0 Inches to Yards: " + demonstrateLengthConversion(36.0, LengthUnit.INCHES, LengthUnit.YARDS).getValue());
+			
+			//Convert CENTIMETERS to INCHES
+			System.out.println("Convert 1.0 Centimeters to Inches: " + demonstrateLengthConversion(1.0, LengthUnit.CENTIMETERS, LengthUnit.INCHES).getValue());
+			
+			// Convert FEET to INCHES
+			System.out.println("Convert 0.0 Feet to Inches: " + demonstrateLengthConversion(0.0, LengthUnit.FEET, LengthUnit.INCHES).getValue());
+		} catch(InvalidUnitMeasurementException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

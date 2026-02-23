@@ -192,7 +192,7 @@ public class QuantityMeasurementAppTest {
 	}
 	
 	@Test  
-	public void convertFeetToInches() {
+	public void convertFeetToInches() throws InvalidUnitMeasurementException {
 		Length lengthInInches = QuantityMeasurementApp.demonstrateLengthConversion(3.0, LengthUnit.FEET, LengthUnit.INCHES);
 		Length expectedLength = new Length(36.0, LengthUnit.INCHES);
 		
@@ -200,7 +200,7 @@ public class QuantityMeasurementAppTest {
 	}
 	
 	@Test
-	public void convertYardsToInchesUsingOverloadedMethod() {
+	public void convertYardsToInchesUsingOverloadedMethod() throws InvalidUnitMeasurementException {
 		Length lengthInYards = new Length(2.0, LengthUnit.YARDS);
 		Length lengthInInches = QuantityMeasurementApp.demonstrateLengthConversion(lengthInYards, LengthUnit.INCHES);
 		
