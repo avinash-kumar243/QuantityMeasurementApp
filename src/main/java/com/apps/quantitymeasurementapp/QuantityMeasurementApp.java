@@ -95,6 +95,12 @@ public class QuantityMeasurementApp {
 		return length1.add(length2); 
 	}
 	
+	
+	// Demonstrate addition of second QuantityLength to first QuantityLength
+	public static Length demonstrateLengthAddition(Length length1, Length length2, LengthUnit targetUnit) {
+		return length1.add(length2, targetUnit);  
+	}
+	
 	public static void main(String args[]) {
 		demonstrateFeetEquality();
 		demonstrateInchEquality();
@@ -163,6 +169,35 @@ public class QuantityMeasurementApp {
 		System.out.println("Adding 5.0 Feet and 0.0 Inches -> " + addInchesToFeet);
 		
 		Length addTwoFeet2 = demonstrateLengthAddition(new Length(5.0, LengthUnit.FEET), new Length(-2.0, LengthUnit.FEET)); 
-		System.out.println("Adding 5.0 Feet and -2.0 Feet -> " + addTwoFeet2); 		
+		System.out.println("Adding 5.0 Feet and -2.0 Feet -> " + addTwoFeet2); 
+		
+		
+		
+		// -------------- Add Length and return to another Length Type ---------------
+		System.out.println("\n----------- Addition of two Length and return Another Length Type ----------");
+		
+		Length addTwoFeetIntoFeet = demonstrateLengthAddition(new Length(1.0, LengthUnit.FEET), new Length(12.0, LengthUnit.INCHES), LengthUnit.FEET); 
+		System.out.println("Adding 1.0 Feet and 12.0 Inches Into Feet -> " + addTwoFeetIntoFeet);
+		
+		Length addFeetAndInchIntoFeet = demonstrateLengthAddition(new Length(1.0, LengthUnit.FEET), new Length(12.0, LengthUnit.INCHES), LengthUnit.INCHES); 
+		System.out.println("Adding 1.0 Feet and 12.0 Inches Into Inches -> " + addFeetAndInchIntoFeet);
+		
+		Length addFeetAndInchIntoYards = demonstrateLengthAddition(new Length(1.0, LengthUnit.FEET), new Length(12.0, LengthUnit.INCHES), LengthUnit.YARDS); 
+		System.out.println("Adding 1.0 Feet and 12.0 Inches Into Yards -> " + addFeetAndInchIntoYards);
+		
+		Length addYardsAndFeetIntoYards = demonstrateLengthAddition(new Length(1.0, LengthUnit.YARDS), new Length(3.0, LengthUnit.FEET), LengthUnit.YARDS); 
+		System.out.println("Adding 1.0 Yards and 3.0 Feet Into Yards -> " + addYardsAndFeetIntoYards);
+		
+		Length addInchesAndYardsIntoFeet = demonstrateLengthAddition(new Length(36.0, LengthUnit.INCHES), new Length(1.0, LengthUnit.YARDS), LengthUnit.FEET); 
+		System.out.println("Adding 36.0 Inches and 1.0 Yards Into Feet -> " + addInchesAndYardsIntoFeet);
+		
+		Length addCentimetersAndInchesIntoFeet = demonstrateLengthAddition(new Length(2.54, LengthUnit.CENTIMETERS), new Length(1.0, LengthUnit.INCHES), LengthUnit.CENTIMETERS); 
+		System.out.println("Adding 2.54 Centimeters and 1.0 Inches Into Centimeters -> " + addCentimetersAndInchesIntoFeet);
+		
+		Length addFeetAndInchesIntoYards = demonstrateLengthAddition(new Length(5.0, LengthUnit.FEET), new Length(0.0, LengthUnit.INCHES), LengthUnit.YARDS); 
+		System.out.println("Adding 5.0 Feet and 0.0 Inches Into Yards -> " + addFeetAndInchesIntoYards);
+		
+		Length addTwoFeetIntoInches = demonstrateLengthAddition(new Length(5.0, LengthUnit.FEET), new Length(-2.0, LengthUnit.FEET), LengthUnit.INCHES); 
+		System.out.println("Adding 5.0 Feet and -2.0 Feet Into Inches -> " + addTwoFeetIntoInches);
 	} 
 }

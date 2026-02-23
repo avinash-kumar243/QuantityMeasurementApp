@@ -66,7 +66,7 @@ public class Length {
 	
 	
 	// Compare two length object for equality based on their values in the base unit
-	private static final double EPSILON = 0.001;
+	private static final double EPSILON = 0.01;
 	public boolean compare(Length thatLength) {
 		if(thatLength == null) {
 			return false;
@@ -112,19 +112,31 @@ public class Length {
 	
 	// A method to add two Length of same category
 	public Length add(Length newLength) {
-		double currLengthInInches = this.convertToBaseUnit();
-		double newLengthInInches = newLength.convertToBaseUnit();
-		
-		double sumOfLength = currLengthInInches + newLengthInInches;
-		
-		double sumOfCurrentInstance = convertFromBaseToTargetUnit(sumOfLength, this.unit);
-		
-		double result = ((int)(sumOfCurrentInstance * 100)) / 100.0;
-		
-		return new Length(result, this.unit); 
+		return addAndConvert(newLength, this.unit); 
 	}
 	
+	
+	// A method to perform addition then conversion on base unit value
+	public Length add(Length length, LengthUnit targetUnit) {
+		return addAndConvert(length, targetUnit); 
+	}
+	
+	
+	// A private method to perform addition conversion on base unit value
+	private Length addAndConvert(Length length, LengthUnit targetUnit) {
+		if(targetUnit == null) {
+			throw new IllegalArgumentException("Target Unit can't be null");
+		}
 		
+		Length currLengthToBaseUnit = this.convertTo(targetUnit);
+		Length newLengthToBaseUnit = length.convertTo(targetUnit);
+		
+		double result = ((int)((currLengthToBaseUnit.getValue() + newLengthToBaseUnit.getValue()) * 1000.0) / 1000.0);
+		
+		return new Length(result, targetUnit); 
+	}
+
+	
 	// A method to convert a length value from the base unit to a specific target unit
 	private double convertFromBaseToTargetUnit(double lengthInFeet, LengthUnit targetUnit) {
 		return lengthInFeet / targetUnit.getConversionFactor(); 
