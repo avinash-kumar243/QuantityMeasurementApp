@@ -13,6 +13,7 @@ public class QuantityMeasurementApp {
 		return length1.equals(length2); 
 	}
 	
+	
 	// Create a static method to demonstrate Feet equality check
 	public static void demonstrateFeetEquality() {
 		Length length1 = new Length(2.0, LengthUnit.FEET); 
@@ -21,6 +22,7 @@ public class QuantityMeasurementApp {
 		System.out.println("Feet Equality: " + demonstrateLengthEquality(length1, length2));
 	} 
 	
+	
 	// Create a static method to demonstrate Inch equality check
 	public static void demonstrateInchEquality() {
 		Length length1 = new Length(12.0, LengthUnit.INCHES);
@@ -28,6 +30,7 @@ public class QuantityMeasurementApp {
 		
 		System.out.println("Inches Equality: " + demonstrateLengthEquality(length1, length2));
 	}
+	
 	
 	// Create a static method to demonstrate Feet and Inches comparison
 	public static void demonstrateFeetInchesComparison() {
@@ -44,6 +47,41 @@ public class QuantityMeasurementApp {
 		Length length2 = new Length(value2, unit2);		
 		
 		System.out.println("Does " + value1 + " " + unit1 + " = " + value2 + " " + unit2 + "? " + length1.equals(length2));
+	}
+	
+	
+	// Demonstrate Length Comparison between two Length Instances
+	public static boolean demonstrateLengthComparison(Length length1, Length length2) {
+		if(length1 == null || length2 == null) {
+			return false;
+		}
+		
+		return length1.compareTo(length2) > 0; 
+	}
+	
+	
+	// Demonstrate Length Conversion from one Quantity Length instance to another Length unit
+	public static Length demonstrateLengthConversion(Length length, LengthUnit toUnit) {
+		if(length == null) {
+			throw new IllegalArgumentException("Length can't be null");
+		}
+		
+		if(toUnit == null) {
+			throw new IllegalArgumentException("Target unit can't be null");
+		}
+		
+		return length.convertTo(toUnit); 
+	}
+	
+	
+	// Demonstrate length conversion from one QuantityLength instance to another unit
+	public static Length demonstrateLengthConversion(double data, LengthUnit unit1, LengthUnit unit2) {
+		if(unit1 == null || unit2 == null) {
+			throw new IllegalArgumentException("UnitLength can't be null");
+		}
+		Length length = new Length(data, unit1);
+		
+		return length.convertTo(unit2); 
 	}
 	
 	public static void main(String args[]) {
@@ -65,5 +103,23 @@ public class QuantityMeasurementApp {
 		
 		// Demonstrate Centimeters and Feet Comparison
 		demonstrateLengthEquality(new Length(100.0, LengthUnit.CENTIMETERS), new Length(3.28084, LengthUnit.FEET));
+		
+		
+//		------------- Length Conversion ------------
+		
+		// Convert FEET to INCHES
+		System.out.println("\nConvert 1.0 Feet to Inches: " + demonstrateLengthConversion(1.0, LengthUnit.FEET, LengthUnit.INCHES).getValue());
+		
+		// Convert YARDS to FEET
+		System.out.println("Convert 3.0 Yards to Feet: " + demonstrateLengthConversion(3.0, LengthUnit.YARDS, LengthUnit.FEET).getValue());
+		
+		// Convert INCHES to YARDS
+		System.out.println("Convert 36.0 Inches to Yards: " + demonstrateLengthConversion(36.0, LengthUnit.INCHES, LengthUnit.YARDS).getValue());
+		
+		//Convert CENTIMETERS to INCHES
+		System.out.println("Convert 1.0 Centimeters to Inches: " + demonstrateLengthConversion(1.0, LengthUnit.CENTIMETERS, LengthUnit.INCHES).getValue());
+		
+		// Convert FEET to INCHES
+		System.out.println("Convert 0.0 Feet to Inches: " + demonstrateLengthConversion(0.0, LengthUnit.FEET, LengthUnit.INCHES).getValue());
 	}
 }

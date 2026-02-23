@@ -9,6 +9,11 @@ public class Length {
 		this.unit = unit;
 	}
 	
+	public double getValue() {
+		return value; 
+	}
+	
+	
 	// Create LengthUnit ENUM
 	public enum LengthUnit {
 		FEET(12.0),
@@ -27,16 +32,29 @@ public class Length {
 		}
 	}
 	
+	
 	// Convert the length value to base unit (inches)
 	public double convertToBaseUnit() {
 		return this.value * this.unit.getConversionFactor(); 
 	}
 	
+	
 	// Convert the length value to any other unit
-	public double convertTo(LengthUnit targetUnit) {
+	public Length convertTo(LengthUnit targetUnit) {
+		if(targetUnit == null) {
+			throw new IllegalArgumentException("Target unit can't be null");
+		}
+		
+		// Step 1 :- convert current value to base unit (inches)
 		double valueInInch = this.convertToBaseUnit();
-		return valueInInch / targetUnit.getConversionFactor(); 
+		
+		// Step 2 :- Convert inches to target unit
+		double convertedValue = valueInInch / targetUnit.getConversionFactor();
+		
+		// Step 3 :- Return new Length Object
+		return new Length(convertedValue, targetUnit); 
 	}
+	
 	
 	// Compare two length object for equality based on their values in the base unit
 	private static final double EPSILON = 0.0001;
@@ -47,6 +65,7 @@ public class Length {
 		
 		return Math.abs(this.convertToBaseUnit() - thatLength.convertToBaseUnit()) < EPSILON; 
 	}
+		
 	
 	// Equals()
 	@Override
@@ -59,6 +78,7 @@ public class Length {
 		
 		return compare((Length)obj); 
 	}
+	
 
 	public static void main(String args[]) {
 		Length length1 = new Length(1.0, LengthUnit.FEET);
@@ -72,5 +92,20 @@ public class Length {
 		Length length5 = new Length(100.0, LengthUnit.CENTIMETERS);
 		Length length6 = new Length(39.3701, LengthUnit.INCHES);
 		System.out.println("Are lengths equal? " + length5.equals(length6)); 
+	}
+
+
+	public int compareTo(Length length) {
+		if(length == null) {
+			throw new IllegalArgumentException("Length can't be null");
+		}
+		
+		double currentValue = this.convertToBaseUnit();
+		double otherValue = length.convertToBaseUnit();
+		
+		if(Math.abs(currentValue - otherValue) < EPSILON) {
+			return 0;
+		}
+		return currentValue < otherValue ? -1 : 1; 
 	}
 }

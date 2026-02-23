@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import com.apps.quantitymeasurementapp.Length.LengthUnit;
 
 public class QuantityMeasurementAppTest {
+	
+//	------ Feet Equality ------
 			
 	@Test
 	public void testFeetEquality_SameValue() {
@@ -39,6 +41,9 @@ public class QuantityMeasurementAppTest {
 		assertTrue(feet1.equals(feet1));
 	}
 	
+	
+//	------ Inches Equality ------
+	
 	@Test
 	public void testInchesEquality_SameValue() {
 		Length inch1 = new Length(12.0, LengthUnit.INCHES);
@@ -71,6 +76,8 @@ public class QuantityMeasurementAppTest {
 		assertTrue(inch1.equals(inch1)); 
 	}
 	
+	
+//	------ Feet & Inches InEquality ------
 	
 	@Test
 	public void testFeetInchesComparison() {
@@ -182,5 +189,22 @@ public class QuantityMeasurementAppTest {
 
 		// Yards and Centimeters
 		assertTrue(new Length(1, LengthUnit.YARDS).equals(new Length(91.44, LengthUnit.CENTIMETERS)));
+	}
+	
+	@Test  
+	public void convertFeetToInches() {
+		Length lengthInInches = QuantityMeasurementApp.demonstrateLengthConversion(3.0, LengthUnit.FEET, LengthUnit.INCHES);
+		Length expectedLength = new Length(36.0, LengthUnit.INCHES);
+		
+		assertTrue(QuantityMeasurementApp.demonstrateLengthEquality(lengthInInches, expectedLength)); 
+	}
+	
+	@Test
+	public void convertYardsToInchesUsingOverloadedMethod() {
+		Length lengthInYards = new Length(2.0, LengthUnit.YARDS);
+		Length lengthInInches = QuantityMeasurementApp.demonstrateLengthConversion(lengthInYards, LengthUnit.INCHES);
+		
+		Length expectedInches = new Length(72.0, LengthUnit.INCHES);
+		assertTrue(QuantityMeasurementApp.demonstrateLengthEquality(lengthInInches, expectedInches)); 
 	}
 }
