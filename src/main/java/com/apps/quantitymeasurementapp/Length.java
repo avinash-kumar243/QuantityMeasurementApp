@@ -6,11 +6,12 @@ public class Length {
 	
 	public Length(double value, LengthUnit unit) {
 		if(Double.isNaN(value)) {
-			throw new IllegalArgumentException("throw");
+			throw new IllegalArgumentException("value can't be null");
 		}
 		if(unit==null) {
-			throw new IllegalArgumentException("throw");
+			throw new IllegalArgumentException("unit can't be null");
 		}
+		
 		this.value = value;
 		this.unit = unit;
 	}
@@ -21,32 +22,7 @@ public class Length {
 	public LengthUnit getUnit() {
 		return unit;
 	}
-	
-		
-	// Create LengthUnit ENUM
-	public enum LengthUnit {
-		FEET(1.0),
-		INCHES(1.0 / 12.0),
-		YARDS(3.0),
-		CENTIMETERS(1.0 / 30.48);
-		
-		private final double conversionFactor;
-		
-		LengthUnit(double conversionFactor) {
-			this.conversionFactor = conversionFactor; 
-		}
-		
-		public double getConversionFactor() {
-			return conversionFactor;
-		}
-	}
-	
-	
-	// Convert the length value to base unit (feet)
-	public double convertToBaseUnit() {
-		return this.value * this.unit.getConversionFactor(); 
-	}
-	
+
 	
 	// Convert the length value to any other unit
 	public Length convertTo(LengthUnit targetUnit) {
@@ -55,10 +31,10 @@ public class Length {
 		}
 		
 		// Step 1 :- convert current value to base unit (feet)
-		double valueInFeet = this.convertToBaseUnit();
+		double valueInFeet = unit.convertToBaseUnit(value);
 		
 		// Step 2 :- Convert inches to target unit
-		double convertedValue = valueInFeet / targetUnit.getConversionFactor();
+		double convertedValue = targetUnit.convertFromBaseUnit(valueInFeet);
 		
 		// Step 3 :- Return new Length Object
 		return new Length(convertedValue, targetUnit); 
@@ -66,17 +42,17 @@ public class Length {
 	
 	
 	// Compare two length object for equality based on their values in the base unit
-	private static final double EPSILON = 0.01;
+	private static final double EPSILON = 0.001;
 	public boolean compare(Length thatLength) {
 		if(thatLength == null) {
 			return false;
 		}
 		
-		return Math.abs(this.convertToBaseUnit() - thatLength.convertToBaseUnit()) < EPSILON; 
+		return Math.abs(this.unit.convertToBaseUnit(this.value) - thatLength.unit.convertToBaseUnit(thatLength.value)) < EPSILON; 
 	}
 		
 	
-	// Equals()
+	// Equals() 
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) return true;
@@ -86,23 +62,21 @@ public class Length {
 		}
 		
 		return compare((Length)obj); 
-	}
-	
+	}	
 	
 	public int compareTo(Length length) {
 		if(length == null) {
 			throw new IllegalArgumentException("Length can't be null");
 		}
 		
-		double currentValue = this.convertToBaseUnit(); 
-		double otherValue = length.convertToBaseUnit();
+		double currentValue = unit.convertToBaseUnit(this.value); 
+		double otherValue = length.unit.convertToBaseUnit(length.value); 
 		
 		if(Math.abs(currentValue - otherValue) < EPSILON) {
 			return 0;
 		}
 		return currentValue < otherValue ? -1 : 1; 
 	}
-	
 	
 	@Override
 	public String toString() {
@@ -127,21 +101,19 @@ public class Length {
 		if(targetUnit == null) {
 			throw new IllegalArgumentException("Target Unit can't be null");
 		}
+		if(length == null) {
+			throw new IllegalArgumentException("Length can't be null");
+		}
 		
-		Length currLengthToBaseUnit = this.convertTo(targetUnit);
-		Length newLengthToBaseUnit = length.convertTo(targetUnit);
+		double thisBaseVal = this.unit.convertToBaseUnit(this.value);
+		double thatBaseVal = length.unit.convertToBaseUnit(length.value);
 		
-		double result = ((int)((currLengthToBaseUnit.getValue() + newLengthToBaseUnit.getValue()) * 1000.0) / 1000.0);
+		double result = targetUnit.convertFromBaseUnit(thisBaseVal + thatBaseVal);
+		result = (int)(result * 1000.0) / 1000.0;
 		
 		return new Length(result, targetUnit); 
 	}
 
-	
-	// A method to convert a length value from the base unit to a specific target unit
-	private double convertFromBaseToTargetUnit(double lengthInFeet, LengthUnit targetUnit) {
-		return lengthInFeet / targetUnit.getConversionFactor(); 
-	}
-	
 	
 	public static void main(String args[]) {
 		Length length1 = new Length(1.0, LengthUnit.FEET);

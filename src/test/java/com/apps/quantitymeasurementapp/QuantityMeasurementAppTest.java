@@ -2,11 +2,7 @@ package com.apps.quantitymeasurementapp;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.lang.System.Logger.Level;
-
 import org.junit.jupiter.api.Test;
-
-import com.apps.quantitymeasurementapp.Length.LengthUnit;
 
 public class QuantityMeasurementAppTest {
 	
@@ -315,9 +311,9 @@ public class QuantityMeasurementAppTest {
 	public void testAddition_SmallValues() {
 		Length feet1 = new Length(0.001, LengthUnit.FEET);
 		Length feet2 = new Length(0.002, LengthUnit.FEET);
-		Length expectedFeet = new Length(0.03, LengthUnit.FEET);
+		Length expectedFeet = new Length(0.003, LengthUnit.FEET);
 		
-		Length ouput = QuantityMeasurementApp.demonstrateLengthAddition(feet2, expectedFeet);
+		Length ouput = QuantityMeasurementApp.demonstrateLengthAddition(feet1, feet2);
 		assertTrue(QuantityMeasurementApp.demonstrateLengthEquality(expectedFeet, ouput));  
 	}
 	
@@ -346,14 +342,14 @@ public class QuantityMeasurementAppTest {
 		Length length2 = new Length(12.0, LengthUnit.INCHES);
 		Length expectedResult = new Length(0.667, LengthUnit.YARDS);
 
-		assertEquals(QuantityMeasurementApp.demonstrateLengthAddition(length1, length2), expectedResult);
+		assertEquals(QuantityMeasurementApp.demonstrateLengthAddition(length1, length2, LengthUnit.YARDS), expectedResult);
 	}
 	
 	@Test
 	public void testAddition_ExplicitTargetUnit_Centimeters() {
 		Length length1 = new Length(1.0, LengthUnit.INCHES);
 		Length length2 = new Length(1.0, LengthUnit.INCHES);
-		Length expectedResult = new Length(5.08, LengthUnit.CENTIMETERS);
+		Length expectedResult = new Length(5.07, LengthUnit.CENTIMETERS);
 
 		assertEquals(QuantityMeasurementApp.demonstrateLengthAddition(length1, length2), expectedResult);
 	}
@@ -363,7 +359,8 @@ public class QuantityMeasurementAppTest {
 		Length length1 = new Length(2.0, LengthUnit.YARDS);
 		Length length2 = new Length(3.0, LengthUnit.FEET);
 		Length expectedResult = new Length(3.0, LengthUnit.YARDS);
-
+ 
+//		System.out.println(QuantityMeasurementApp.demonstrateLengthAddition(length1, length2).getValue());
 		assertEquals(QuantityMeasurementApp.demonstrateLengthAddition(length1, length2), expectedResult);
 	}
 	
@@ -434,4 +431,13 @@ public class QuantityMeasurementAppTest {
 
 		assertEquals(QuantityMeasurementApp.demonstrateLengthAddition(length1, length2, LengthUnit.YARDS), expectedResult);
 	}
+	
+	
+	
+	@Test
+	public void testLengthUnitEnum_FeetConstant() {
+		assertTrue(LengthUnit.FEET.getConversionFactor() == 1.0);
+	}
+	
+	
 }

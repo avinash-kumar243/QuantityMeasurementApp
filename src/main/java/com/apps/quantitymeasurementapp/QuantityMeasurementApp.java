@@ -1,6 +1,5 @@
 package com.apps.quantitymeasurementapp;
 
-import com.apps.quantitymeasurementapp.Length.LengthUnit;
 
 public class QuantityMeasurementApp {
 	
@@ -56,7 +55,7 @@ public class QuantityMeasurementApp {
 			throw new InvalidUnitMeasurementException("Length can't be null");
 		}
 		
-		return length1.compareTo(length2) > 0; 
+		return length1.equals(length2); 
 	}
 	
 	
