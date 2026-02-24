@@ -14,7 +14,7 @@ public enum LengthUnit {
 	
 	
 	public double getConversionFactor() {
-		return this.conversionFactor; 
+		return (int)(this.conversionFactor * 10000.0) / 10000.0; 
 	} 
 	
 	public double convertToBaseUnit(double value) {
