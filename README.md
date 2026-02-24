@@ -120,3 +120,18 @@ main
 - [feature/UC5-UnitConversoion](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC5-UnitConversion/src)
 
 ---
+
+## 📅 21 Feb 2026  
+### 🔹 UC6 – Addition of Two Length Units  
+**Branch:** `feature/UC6-UnitAddition`
+
+### 🎯 Objective
+- Add two quantities correctly  
+
+### ✅ Implementation
+- Converted to base unit before addition  
+- Accurate arithmetic operations  
+- Clean and reusable method structure  
+- [feature/UC6-UnitAddition](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC6-UnitAddition/src)
+
+---
