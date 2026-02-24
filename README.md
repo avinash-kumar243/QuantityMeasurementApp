@@ -1,3 +1,3 @@
 # QuantityMeasurementApp
 This is about QuantityMeasurementApp
-feature/UC7-TargetUnitAddition
+feature/UC8-StandaloneUnit
