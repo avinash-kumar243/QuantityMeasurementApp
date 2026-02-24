@@ -151,3 +151,20 @@ main
 - [feature/UC7-TargetUnitAddition](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC7-TargetUnitAddition/src)
 
 ---
+
+## 📅 23 Feb 2026  
+### 🔹 UC8 – Refactoring Unit Enum to Standalone  
+**Branch:** `feature/UC8-StandaloneUnit`
+
+### 🎯 Objective
+- Separate Unit enum from Quantity class  
+- Improve modularity  
+- Enable multi-category support  
+
+### ✅ Implementation
+- Moved Unit enum to standalone file  
+- Improved separation of concerns  
+- Increased flexibility for new categories  
+- [feature/UC8-StandaloneUnit](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC8-StandaloneUnit/src)
+
+---
