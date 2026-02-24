@@ -89,3 +89,19 @@ main
 - [feature/UC3-GenericLength](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC3-GenericLength/src)
 
 ---
+
+## 📅 20 Feb 2026  
+### 🔹 UC4 – Extended Unit Support  
+**Branch:** `feature/UC4-YardEquality`
+
+### 🎯 Objective
+- Support additional units (Yard, etc.)  
+- Make system scalable  
+
+### ✅ Implementation
+- Introduced Unit Enum  
+- Base unit conversion mapping  
+- Easily extensible structure  
+- [feature/UC4-YardEquality](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC4-YardEquality/src)
+
+---
