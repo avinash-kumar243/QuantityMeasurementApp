@@ -105,3 +105,18 @@ main
 - [feature/UC4-YardEquality](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC4-YardEquality/src)
 
 ---
+
+## 📅 20 Feb 2026  
+### 🔹 UC5 – Unit-to-Unit Conversion  
+**Branch:** `feature/UC5-UnitConversoion`
+
+### 🎯 Objective
+- Convert one unit into another  
+
+### ✅ Implementation
+- Implemented `convertTo()` method  
+- Centralized conversion logic  
+- Ensured precision-safe calculations  
+- [feature/UC5-UnitConversoion](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC5-UnitConversion/src)
+
+---
