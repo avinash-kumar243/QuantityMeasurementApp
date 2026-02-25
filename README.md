@@ -17,19 +17,18 @@ This project was implemented incrementally using:
 
 ---
 
-## 📅 23 Feb 2026  
-### 🔹 UC8 – Refactoring Unit Enum to Standalone  
-**Branch:** `feature/UC8-StandaloneUnit`
+## 📅 24 Feb 2026  
+### 🔹 UC9 – Weight Measurement  
+**Branch:** `feature/UC9-WeightMeasurement`
 
 ### 🎯 Objective
-- Separate Unit enum from Quantity class  
-- Improve modularity  
-- Enable multi-category support  
+- Extend application to support Weight category  
+- Maintain clean architecture  
 
 ### ✅ Implementation
-- Moved Unit enum to standalone file  
-- Improved separation of concerns  
-- Increased flexibility for new categories  
-- [feature/UC8-StandaloneUnit](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC8-StandaloneUnit/src)
+- Introduced Weight units (Gram, Kilogram, etc.)  
+- Implemented base unit conversion  
+- Ensured category-safe equality  
+- Prevented cross-category comparison (Length ≠ Weight)  
 
 ---
