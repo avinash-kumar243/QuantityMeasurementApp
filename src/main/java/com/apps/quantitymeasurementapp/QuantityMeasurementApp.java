@@ -1,8 +1,38 @@
 package com.apps.quantitymeasurementapp;
 
-
 public class QuantityMeasurementApp {
 	
+	// New Methods for Weight Functionality
+	public static boolean demonstrateWeightEquality(Weight weight1, Weight weight2) {
+		if(weight1 == null || weight2 == null) {
+			throw new IllegalArgumentException("Weight can't be null");
+		}
+		return weight1.equals(weight2);
+	}
+	
+	public static boolean demonstrateWeightComparison(double value1, WeightUnit unit1, double value2, WeightUnit unit2) {
+		return new Weight(value1, unit1).compare(new Weight(value2, unit2));  
+	}
+	
+	public static Weight demonstrateWeightConversion(double value, WeightUnit from, WeightUnit to) {
+		return new Weight(value, from).convertTo(to); 
+	}
+	
+	public static Weight demonstrateWeightConversion(Weight weight, WeightUnit toUnit) {
+		return weight.convertTo(toUnit); 
+	}
+	
+	public static Weight demonstrateWeightAddition(Weight weight1, Weight weight2) {
+		return weight1.add(weight2); 
+	}
+	
+	public static Weight demonstrateWeightAddition(Weight weight1, Weight weight2, WeightUnit toUnit) {
+		return weight1.add(weight2, toUnit); 
+	}
+	
+	
+	
+	// Methods for Length Functionality
 	// Create a generic method to demonstrate Length equality check
 	public static boolean demonstrateLengthEquality(Length length1, Length length2) {
 		if(length1 == null || length2 == null) {
@@ -99,6 +129,7 @@ public class QuantityMeasurementApp {
 	public static Length demonstrateLengthAddition(Length length1, Length length2, LengthUnit targetUnit) {
 		return length1.add(length2, targetUnit);  
 	}
+	
 	
 	public static void main(String args[]) {
 		demonstrateFeetEquality();
@@ -198,5 +229,59 @@ public class QuantityMeasurementApp {
 		
 		Length addTwoFeetIntoInches = demonstrateLengthAddition(new Length(5.0, LengthUnit.FEET), new Length(-2.0, LengthUnit.FEET), LengthUnit.INCHES); 
 		System.out.println("Adding 5.0 Feet and -2.0 Feet Into Inches -> " + addTwoFeetIntoInches);
+		
+		
+		
+		
+		// --------------- Weight Equality Comparison -----------------
+		System.out.println("\n-------------- Weight Equality Comparison -------------");
+		System.out.println(demonstrateWeightEquality(new Weight(1.0, WeightUnit.KILOGRAM), new Weight(1.0, WeightUnit.KILOGRAM)));
+		
+		System.out.println(demonstrateWeightEquality(new Weight(1.0, WeightUnit.KILOGRAM), new Weight(1000.0, WeightUnit.GRAM)));
+
+		System.out.println(demonstrateWeightEquality(new Weight(2.0, WeightUnit.POUND), new Weight(2.0, WeightUnit.POUND)));
+
+		System.out.println(demonstrateWeightEquality(new Weight(1.0, WeightUnit.KILOGRAM), new Weight(2.20462, WeightUnit.POUND)));
+
+		System.out.println(demonstrateWeightEquality(new Weight(500.0, WeightUnit.GRAM), new Weight(0.5, WeightUnit.KILOGRAM)));
+
+		System.out.println(demonstrateWeightEquality(new Weight(1.0, WeightUnit.POUND), new Weight(453.592, WeightUnit.GRAM)));
+		
+		
+		// --------------- Unit Conversions -----------------
+		System.out.println("\n-------------- Unit Conversions -------------");
+		
+		System.out.println(demonstrateWeightConversion(new Weight(1.0, WeightUnit.KILOGRAM), WeightUnit.GRAM)); 
+
+		System.out.println(demonstrateWeightConversion(new Weight(2.0, WeightUnit.POUND), WeightUnit.KILOGRAM)); 
+		
+		System.out.println(demonstrateWeightConversion(new Weight(500.0, WeightUnit.GRAM), WeightUnit.POUND)); 
+
+		System.out.println(demonstrateWeightConversion(new Weight(0.0, WeightUnit.KILOGRAM), WeightUnit.GRAM)); 
+		
+		
+		// --------------- Addition Operations ----------------
+		System.out.println("\n--------------- Addition of Weights ---------------");
+		
+		Weight addTwoKilogram = demonstrateWeightAddition(new Weight(1.0, WeightUnit.KILOGRAM), new Weight(2.0, WeightUnit.KILOGRAM));
+		System.out.println("Addition of 1.0 Kilogram and 2.0 Kilogram -> " + addTwoKilogram);
+		
+		Weight addKilogramWithGram = demonstrateWeightAddition(new Weight(1.0, WeightUnit.KILOGRAM), new Weight(1000.0, WeightUnit.GRAM));
+		System.out.println("Addition of 1.0 Kilogram and 1000.0 Gram -> " + addKilogramWithGram);
+		
+		Weight addGramWithKilogram = demonstrateWeightAddition(new Weight(500.0, WeightUnit.GRAM), new Weight(0.5, WeightUnit.KILOGRAM));
+		System.out.println("Addition of 500.0 Gram and 0.5 Kilogram -> " + addGramWithKilogram);
+		
+		
+		// Getting error
+		Weight addKilogramWithGram2 = demonstrateWeightAddition(new Weight(1.0, WeightUnit.KILOGRAM), new Weight(1000.0, WeightUnit.GRAM), WeightUnit.GRAM);
+		System.out.println("Addition of 1.0 Kilogram and 1000.0 Gram -> " + addKilogramWithGram2);
+		
+		Weight addPoundWithGram = demonstrateWeightAddition(new Weight(1.0, WeightUnit.POUND), new Weight(453.592, WeightUnit.GRAM), WeightUnit.POUND);
+		System.out.println("Addition of 1.0 Pound and 453.592 Gram -> " + addPoundWithGram);
+		
+		Weight addKilometerWithPound = demonstrateWeightAddition(new Weight(2.0, WeightUnit.KILOGRAM), new Weight(4.0, WeightUnit.POUND));
+		System.out.println("Addition of 2.0 Kilogram and 4.0 Pound -> " + addKilometerWithPound);		
+		
 	} 
 }
