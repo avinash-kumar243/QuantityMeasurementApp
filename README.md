@@ -30,5 +30,6 @@ This project was implemented incrementally using:
 - Implemented base unit conversion  
 - Ensured category-safe equality  
 - Prevented cross-category comparison (Length ≠ Weight)  
+- [feature/UC9-WeightMeasurement](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC9-WeightMeasurement/src)
 
 ---
