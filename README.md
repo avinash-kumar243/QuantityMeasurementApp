@@ -168,3 +168,20 @@ main
 - [feature/UC8-StandaloneUnit](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC8-StandaloneUnit/src)
 
 ---
+
+## 📅 24 Feb 2026  
+### 🔹 UC9 – Weight Measurement  
+**Branch:** `feature/UC9-WeightMeasurement`
+
+### 🎯 Objective
+- Extend application to support Weight category  
+- Maintain clean architecture  
+
+### ✅ Implementation
+- Introduced Weight units (Gram, Kilogram, etc.)  
+- Implemented base unit conversion  
+- Ensured category-safe equality  
+- Prevented cross-category comparison (Length ≠ Weight)  
+- [feature/UC9-WeightMeasurement](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC9-WeightMeasurement/src)
+
+---
