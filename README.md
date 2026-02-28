@@ -37,7 +37,7 @@ This project was implemented incrementally using:
 ### 🏗 Result
 System now supports:
 - Length
-- Weight
+- Weight 
 - Volume  
 
 ---
