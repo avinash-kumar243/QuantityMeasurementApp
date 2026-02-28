@@ -3,6 +3,7 @@ package com.apps.quantitymeasurementapp;
 public class Quantity<U extends IMeasurable> {
 	private final double value;
 	private final U unit;
+	private static final double EPSILON = 0.0001;
 	
 	public Quantity(double value, U unit) {
 		if(unit == null) {
@@ -32,12 +33,16 @@ public class Quantity<U extends IMeasurable> {
 			return false;
 		}
 		
-		Quantity<?> thatObj = (Quantity<?>) obj;
+		Quantity<?> thatObj = (Quantity<?>) obj; 
+		
+		 if(!this.unit.getClass().equals(thatObj.unit.getClass())) {
+		     return false;
+		 }
 		
 		double thisBase = unit.convertToBaseUnit(value);
 		double thatBase = thatObj.unit.convertToBaseUnit(thatObj.value);
-		
-		return Double.compare(thisBase, thatBase) == 0; 
+		 
+		return Math.abs(thisBase - thatBase) < EPSILON;  
 	}
 	
 	// ConvertTo()
@@ -73,6 +78,10 @@ public class Quantity<U extends IMeasurable> {
 		if(this.unit == null || other.unit == null) {
 			throw new IllegalArgumentException("Quantity unit can't be null!!!");
 		}
+
+	    if(!this.unit.getClass().equals(other.unit.getClass())) {
+	        throw new IllegalArgumentException("Cannot add different unit categories");
+	    }
 		
 		double thisBase = unit.convertToBaseUnit(value);
 		double thatBase = other.unit.convertToBaseUnit(other.value);
@@ -82,6 +91,11 @@ public class Quantity<U extends IMeasurable> {
 		double result = targetUnit.convertFromBaseUnit(sum);
 		
 		return new Quantity<U>(result, targetUnit); 
+	}
+	
+	@Override
+	public String toString() {
+		return value + " " + unit;
 	}
 
 	public static void main(String[] args) {
