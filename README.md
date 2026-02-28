@@ -34,5 +34,7 @@ This project was implemented incrementally using:
   - Type-safe unit handling  
   - Category-safe operations  
   - Scalable architecture  
+  
+- [feature/UC10-GenericQuantity](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC10-GenericQuantity/src)
 
 ---
