@@ -1,6 +1,6 @@
 package com.apps.quantitymeasurementapp;
 
-public enum LengthUnit {
+public enum LengthUnit implements IMeasurable {
 	FEET(1.0),
 	INCHES(1.0 / 12.0),
 	YARDS(3.0),
@@ -27,5 +27,11 @@ public enum LengthUnit {
 	
 	private double round(double value) {
 		return Math.round(value * 1000.0) / 1000.0; 
+	}
+
+
+	@Override
+	public String getUnitName() {
+		return "Length";
 	}
 }
