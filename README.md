@@ -207,3 +207,29 @@ main
 - [feature/UC10-GenericQuantity](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC10-GenericQuantity/src)
 
 ---
+
+## 📅 25 Feb 2026  
+### 🔹 UC11 – Volume Measurement Equality, Conversion & Addition  
+**Branch:**  `feature/UC11-VolumeMeasurement`
+
+### 🎯 Objective
+- Introduce Volume measurement category  
+- Support Litre, Millilitre, Gallon  
+- Enable equality, conversion, and addition  
+
+### ✅ Implementation
+- Created `VolumeUnit` enum  
+- Implemented base unit strategy (Millilitre as base)  
+- Enabled cross-unit comparison (1000 ml = 1 Litre)  
+- Added addition support within category  
+- Prevented cross-category arithmetic  
+
+### 🏗 Result
+System now supports:
+- Length
+- Weight 
+- Volume  
+
+- [feature/UC11-VolumeMeasurement](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC11-VolumeMeasurement/src)
+
+---
