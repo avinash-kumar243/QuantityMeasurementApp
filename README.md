@@ -17,27 +17,26 @@ This project was implemented incrementally using:
 
 ---
 
-
-## 📅 25 Feb 2026  
-### 🔹 UC11 – Volume Measurement Equality, Conversion & Addition  
-**Branch:**  `feature/UC11-VolumeMeasurement`
+## 📅 26 Feb 2026  
+### 🔹 UC12 – Subtraction & Division Operations  
+**Branch:**  `feature/UC12-SubtractionAndDivision`
 
 ### 🎯 Objective
-- Introduce Volume measurement category  
-- Support Litre, Millilitre, Gallon  
-- Enable equality, conversion, and addition  
+- Extend arithmetic support  
+- Enable subtraction between quantities  
+- Support division operations  
 
 ### ✅ Implementation
-- Created `VolumeUnit` enum  
-- Implemented base unit strategy (Millilitre as base)  
-- Enabled cross-unit comparison (1000 ml = 1 Litre)  
-- Added addition support within category  
-- Prevented cross-category arithmetic  
+- Added `subtract()` method  
+- Added `divide()` method  
+- Ensured same-category enforcement  
+- Maintained base unit conversion logic  
+- Precision-safe arithmetic  
 
-### 🏗 Result
-System now supports:
-- Length
-- Weight 
-- Volume  
+### ⚙ Design Principle
+All arithmetic operations follow:
+1. Convert to base unit  
+2. Perform operation  
+3. Convert to target unit  
 
 ---
