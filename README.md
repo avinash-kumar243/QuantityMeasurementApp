@@ -233,3 +233,29 @@ System now supports:
 - [feature/UC11-VolumeMeasurement](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC11-VolumeMeasurement/src)
 
 ---
+
+## 📅 26 Feb 2026  
+### 🔹 UC12 – Subtraction & Division Operations  
+**Branch:**  `feature/UC12-SubtractionAndDivision`
+
+### 🎯 Objective
+- Extend arithmetic support  
+- Enable subtraction between quantities  
+- Support division operations  
+
+### ✅ Implementation
+- Added `subtract()` method  
+- Added `divide()` method  
+- Ensured same-category enforcement  
+- Maintained base unit conversion logic  
+- Precision-safe arithmetic  
+
+### ⚙ Design Principle
+All arithmetic operations follow:
+1. Convert to base unit  
+2. Perform operation  
+3. Convert to target unit  
+
+- [feature/UC12-SubtractionAndDivision](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC12-SubtractionAndDivision/src)
+
+---
