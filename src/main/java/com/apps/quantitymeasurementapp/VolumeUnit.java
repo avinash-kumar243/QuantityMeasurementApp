@@ -24,11 +24,6 @@ public enum VolumeUnit implements IMeasurable {
 	public double convertFromBaseUnit(double baseValue) {
 		return baseValue / conversionFactor; 
 	}
-//	
-//	private double round(double value) {
-//		return Math.round(value * 1000.0) / 1000.0; 
-//	}
-//	
 
 	@Override
 	public String getUnitName() {

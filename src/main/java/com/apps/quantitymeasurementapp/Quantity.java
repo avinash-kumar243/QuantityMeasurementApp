@@ -97,6 +97,76 @@ public class Quantity<U extends IMeasurable> {
 	public String toString() {
 		return value + " " + unit;
 	}
+	
+	
+	
+	// --------------- subtract() ------------------
+	public Quantity<U> subtract(Quantity<U> other) {
+		return subtractAndConvert(other, unit); 
+	}
+	
+	
+	public Quantity<U> subtract(Quantity<U> other, U targetUnit) {
+		if(targetUnit == null) {
+			throw new IllegalArgumentException("Target unit can't be null");
+		}
+		return subtractAndConvert(other, targetUnit); 
+	}
+	
+	private Quantity<U> subtractAndConvert(Quantity<U> other, U targetUnit) {
+		if(this.unit == null || other.unit == null) {
+			throw new IllegalArgumentException("Quantity unit can't be null!!!");
+		}
+
+	    if(!this.unit.getClass().equals(other.unit.getClass())) {
+	        throw new IllegalArgumentException("Cannot add different unit categories");
+	    }
+		
+		double thisBase = unit.convertToBaseUnit(value);
+		double thatBase = other.unit.convertToBaseUnit(other.value);
+		
+		double sub = thisBase - thatBase;
+		
+		double result = targetUnit.convertFromBaseUnit(sub);
+		
+		return new Quantity<U>(result, targetUnit); 
+	}
+	
+	
+	
+	// ------------------ Divide() -------------------
+	public double divide(Quantity<U> other) {
+		return divideAndConvert(other, unit); 
+	}
+	
+	public double divide(Quantity<U> other, U targetUnit) {
+		if(targetUnit == null) {
+			throw new IllegalArgumentException("Target unit can't be null");
+		}
+		return divideAndConvert(other, targetUnit); 
+	} 
+	 
+	private double divideAndConvert(Quantity<U> other, U targetUnit) {
+		if(this.unit == null || other.unit == null) {
+			throw new IllegalArgumentException("Quantity unit can't be null!!!");
+		}
+
+	    if(!this.unit.getClass().equals(other.unit.getClass())) {
+	        throw new IllegalArgumentException("Cannot add different unit categories");
+	    }
+		
+		double thisBase = unit.convertToBaseUnit(value);
+		double thatBase = other.unit.convertToBaseUnit(other.value);
+		
+		double div = thisBase / thatBase; 
+		
+//		double result = targetUnit.convertFromBaseUnit(sub);
+//		
+//		return new Quantity<U>(result, targetUnit); 
+		
+		return div;
+	}
+	
 
 	public static void main(String[] args) {
 		
@@ -129,6 +199,21 @@ public class Quantity<U extends IMeasurable> {
 		// Weight Addition
 		Quantity<WeightUnit> totalWeight = weightInKilograms.add(weightInGrams, WeightUnit.GRAM);
 		System.out.println("Addition of 2.0 Kg and 2000.0 g is: " + totalWeight.value + " " + totalWeight.unit); 		
+		
+		
+		// Subtraction and division
+		Quantity<WeightUnit> weight1 = new Quantity<WeightUnit>(2000, WeightUnit.GRAM);
+		Quantity<WeightUnit> weight2 = new Quantity<WeightUnit>(3000, WeightUnit.GRAM);
+		Quantity<VolumeUnit> volume1 = new Quantity<VolumeUnit>(1.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> volume2 = new Quantity<VolumeUnit>(2.0, VolumeUnit.LITRE);
+
+		
+		System.out.println(weight2.subtract(weight1));
+		System.out.println(weight1.divide(weight2));
+		System.out.println(volume2.subtract(volume1));
+		System.out.println(volume2.divide(volume1));
+
+		
 	}
 }
 

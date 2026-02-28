@@ -33,6 +33,29 @@ public class QuantityMeasurementApp {
 	}
 	
 	
+	public static <U extends IMeasurable> Quantity<U> demonstrateSubtraction(Quantity<U> quantity1, Quantity<U> quantity2) {
+		if(quantity1 == null || quantity2 == null) {
+			throw new IllegalArgumentException("Quantity can't be null");
+		}
+		return quantity1.subtract(quantity2); 
+	}
+	
+	public static <U extends IMeasurable> Quantity<U> demonstrateSubtraction(Quantity<U> quantity1, Quantity<U> quantity2, U targetUnit) {
+		if(quantity1 == null || quantity2 == null ) {
+			throw new IllegalArgumentException("Quantity can't be null");
+		} else if(targetUnit == null) {
+			throw new IllegalArgumentException("Target unit can't be null");
+		}
+		return quantity1.subtract(quantity2, targetUnit);
+	}
+	
+	public static <U extends IMeasurable> double demonstrateDivision(Quantity<U> quantity1, Quantity<U> quantity2) {
+		if(quantity1 == null || quantity2 == null) {
+			throw new IllegalArgumentException("Quantity can't be null");
+		}
+		return quantity1.divide(quantity2); 
+	}
+	
 	
 	
 	public static void main(String args[]) {
@@ -232,5 +255,93 @@ public class QuantityMeasurementApp {
 		System.out.println(new Quantity<>(1.0, VolumeUnit.LITRE).equals(new Quantity<>(1.0, LengthUnit.FEET)));
 
 		System.out.println(new Quantity<>(1.0, VolumeUnit.LITRE).equals(new Quantity<>(1.0, WeightUnit.KILOGRAM)));
+		
+		
+		
+		System.out.println("\n--------------- Subtraction ----------------");
+
+		// -------- Subtraction with Implicit Target Unit --------
+		System.out.println("\n--- Implicit Target Unit ---");
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(10.0, LengthUnit.FEET), new Quantity<>(6.0, LengthUnit.INCHES)));
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(10.0, WeightUnit.KILOGRAM), new Quantity<>(5000.0, WeightUnit.GRAM)));
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(5.0, VolumeUnit.LITRE), new Quantity<>(500.0, VolumeUnit.MILLILITRE)));
+
+
+		// -------- Subtraction with Explicit Target Unit --------
+		System.out.println("\n--- Explicit Target Unit ---");
+
+		System.out.println(
+		        demonstrateSubtraction(new Quantity<>(10.0, LengthUnit.FEET), new Quantity<>(6.0, LengthUnit.INCHES), LengthUnit.INCHES));
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(10.0, WeightUnit.KILOGRAM), new Quantity<>(5000.0, WeightUnit.GRAM), WeightUnit.GRAM));
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(5.0, VolumeUnit.LITRE), new Quantity<>(2.0, VolumeUnit.LITRE), VolumeUnit.MILLILITRE));
+
+
+		// -------- Subtraction Resulting in Negative --------
+		System.out.println("\n--- Negative Results ---");
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(5.0, LengthUnit.FEET), new Quantity<>(10.0, LengthUnit.FEET)));
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(2.0, WeightUnit.KILOGRAM), new Quantity<>(5.0, WeightUnit.KILOGRAM)));
+
+
+		// -------- Subtraction Resulting in Zero --------
+		System.out.println("\n--- Zero Results ---");
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(10.0, LengthUnit.FEET),new Quantity<>(120.0, LengthUnit.INCHES)));
+
+		System.out.println(demonstrateSubtraction(new Quantity<>(1.0, VolumeUnit.LITRE), new Quantity<>(1000.0, VolumeUnit.MILLILITRE)));
+
+
+		// =======================================================
+		// ---------------- DIVISION ------------------------------
+		// =======================================================
+
+		System.out.println("\n------------- DIVISION ---------------");
+
+		System.out.println(demonstrateDivision(new Quantity<>(10.0, LengthUnit.FEET), new Quantity<>(2.0, LengthUnit.FEET)));
+
+		System.out.println(demonstrateDivision(new Quantity<>(10.0, LengthUnit.FEET), new Quantity<>(5.0, LengthUnit.FEET)));
+
+		System.out.println(demonstrateDivision(new Quantity<>(24.0, LengthUnit.INCHES), new Quantity<>(2.0, LengthUnit.FEET)));
+
+		System.out.println(demonstrateDivision(new Quantity<>(10.0, WeightUnit.KILOGRAM), new Quantity<>(5.0, WeightUnit.KILOGRAM)));
+
+		System.out.println(
+		        demonstrateDivision(
+		                new Quantity<>(5.0, VolumeUnit.LITRE),
+		                new Quantity<>(10.0, VolumeUnit.LITRE)
+		        )
+		);
+
+
+		// -------- Division with Different Units (Same Category) --------
+
+		System.out.println("\n--- Division Cross Units ---");
+
+		System.out.println(
+		        demonstrateDivision(
+		                new Quantity<>(12.0, LengthUnit.INCHES),
+		                new Quantity<>(1.0, LengthUnit.FEET)
+		        )
+		);
+
+		System.out.println(
+		        demonstrateDivision(
+		                new Quantity<>(2000.0, WeightUnit.GRAM),
+		                new Quantity<>(1.0, WeightUnit.KILOGRAM)
+		        )
+		);
+
+		System.out.println(
+		        demonstrateDivision(
+		                new Quantity<>(1000.0, VolumeUnit.MILLILITRE),
+		                new Quantity<>(1.0, VolumeUnit.LITRE)
+		        )
+		);
 	} 
 }
