@@ -17,28 +17,24 @@ This project was implemented incrementally using:
 
 ---
 
-## 📅 26 Feb 2026  
-### 🔹 UC12 – Subtraction & Division Operations  
-**Branch:**  `feature/UC12-SubtractionAndDivision`
+## 📅 27 Feb 2026  
+### 🔹 UC13 – Centralized Arithmetic Logic (DRY Enforcement)  
+**Branch:**  `feature/UC13-CentralizedArithmeticLogic`
 
 ### 🎯 Objective
-- Extend arithmetic support  
-- Enable subtraction between quantities  
-- Support division operations  
+- Remove duplication across add, subtract, divide  
+- Centralize arithmetic handling  
 
 ### ✅ Implementation
-- Added `subtract()` method  
-- Added `divide()` method  
-- Ensured same-category enforcement  
-- Maintained base unit conversion logic  
-- Precision-safe arithmetic  
+- Introduced common internal arithmetic handler  
+- Removed repeated conversion code  
+- Improved maintainability  
+- Reduced logic duplication  
+- Strengthened DRY compliance  
 
-### ⚙ Design Principle
-All arithmetic operations follow:
-1. Convert to base unit  
-2. Perform operation  
-3. Convert to target unit  
-
-- [feature/UC12-SubtractionAndDivision](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC12-SubtractionAndDivision/src)
+### 🧠 Engineering Impact
+- Cleaner architecture  
+- Easier future feature additions  
+- Reduced error-prone code blocks  
 
 ---
