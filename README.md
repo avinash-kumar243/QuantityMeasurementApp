@@ -42,6 +42,7 @@ Conversion requires formula-based transformation:
 ### 🧠 Architectural Enhancement
 - Introduced selective arithmetic capability  
 - Improved domain modeling  
-- Applied behavior-driven restrictions  
+- Applied behavior-driven restrictions
+- [feature/UC14-TemperatureMeasurementwithSelectiveArithmetic](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src)
 
 ---
