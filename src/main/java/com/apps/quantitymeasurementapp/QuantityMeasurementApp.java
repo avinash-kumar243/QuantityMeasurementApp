@@ -343,5 +343,38 @@ public class QuantityMeasurementApp {
 		                new Quantity<>(1.0, VolumeUnit.LITRE)
 		        )
 		);
+		
+				
+		System.out.println(new Quantity<>(0.0, TemperatureUnit.CELSIUS)
+	                .equals(new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT)));
+
+        System.out.println(new Quantity<>(273.15, TemperatureUnit.KELVIN)
+                .equals(new Quantity<>(0.0, TemperatureUnit.CELSIUS)));
+
+        System.out.println(new Quantity<>(212.0, TemperatureUnit.FAHRENHEIT)
+                .equals(new Quantity<>(100.0, TemperatureUnit.CELSIUS)));
+
+        System.out.println(new Quantity<>(100.0, TemperatureUnit.CELSIUS)
+                .equals(new Quantity<>(373.15, TemperatureUnit.KELVIN)));
+
+        System.out.println(new Quantity<>(50.0, TemperatureUnit.CELSIUS)
+                .equals(new Quantity<>(122.0, TemperatureUnit.FAHRENHEIT)));
+
+
+
+        System.out.println(new Quantity<>(100.0, TemperatureUnit.CELSIUS)
+                .convertTo(TemperatureUnit.FAHRENHEIT));
+
+        System.out.println(new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT)
+                .convertTo(TemperatureUnit.CELSIUS));
+
+        System.out.println(new Quantity<>(273.15, TemperatureUnit.KELVIN)
+                .convertTo(TemperatureUnit.CELSIUS));
+
+        System.out.println(new Quantity<>(0.0, TemperatureUnit.CELSIUS)
+                .convertTo(TemperatureUnit.KELVIN));
+
+        System.out.println(new Quantity<>(-40.0, TemperatureUnit.CELSIUS)
+                .convertTo(TemperatureUnit.FAHRENHEIT));
 	} 
 }
