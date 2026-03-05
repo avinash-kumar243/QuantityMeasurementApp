@@ -36,5 +36,6 @@ This project was implemented incrementally using:
 - Cleaner architecture  
 - Easier future feature additions  
 - Reduced error-prone code blocks  
+- [feature/UC13-CentralizedArithmeticLogic](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC13-CentralizedArithmeticLogic/src)
 
 ---
