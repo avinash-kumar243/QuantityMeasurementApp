@@ -102,6 +102,9 @@ public class Quantity<U extends IMeasurable> {
 	
 	// --------------- subtract() ------------------
 	public Quantity<U> subtract(Quantity<U> other) {
+		if (other == null) {
+	        throw new IllegalArgumentException("Operand cannot be null");
+	    }
 		return subtractAndConvert(other, unit); 
 	}
 	
@@ -129,6 +132,8 @@ public class Quantity<U extends IMeasurable> {
 		
 		double result = targetUnit.convertFromBaseUnit(sub);
 		
+		result = Math.round(result * 1000000000.0) / 1000000000.0;
+		
 		return new Quantity<U>(result, targetUnit); 
 	}
 	
@@ -136,6 +141,9 @@ public class Quantity<U extends IMeasurable> {
 	
 	// ------------------ Divide() -------------------
 	public double divide(Quantity<U> other) {
+		if(other == null) {
+	        throw new IllegalArgumentException("Operand cannot be null");
+	    }
 		return divideAndConvert(other, unit); 
 	}
 	
@@ -157,6 +165,11 @@ public class Quantity<U extends IMeasurable> {
 		
 		double thisBase = unit.convertToBaseUnit(value);
 		double thatBase = other.unit.convertToBaseUnit(other.value);
+		
+		
+		if(thatBase == 0) {
+	        throw new ArithmeticException("Cannot divide by zero");
+		}
 		
 		double div = thisBase / thatBase; 
 		
