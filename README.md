@@ -259,3 +259,56 @@ All arithmetic operations follow:
 - [feature/UC12-SubtractionAndDivision](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC12-SubtractionAndDivision/src)
 
 ---
+
+## 📅 27 Feb 2026  
+### 🔹 UC13 – Centralized Arithmetic Logic (DRY Enforcement)  
+**Branch:**  `feature/UC13-CentralizedArithmeticLogic`
+
+### 🎯 Objective
+- Remove duplication across add, subtract, divide  
+- Centralize arithmetic handling  
+
+### ✅ Implementation
+- Introduced common internal arithmetic handler  
+- Removed repeated conversion code  
+- Improved maintainability  
+- Reduced logic duplication  
+- Strengthened DRY compliance  
+
+### 🧠 Engineering Impact
+- Cleaner architecture  
+- Easier future feature additions  
+- Reduced error-prone code blocks  
+- [feature/UC13-CentralizedArithmeticLogic](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC13-CentralizedArithmeticLogic/src)
+
+---
+
+## 📅 28 Feb 2026  
+### 🔹 UC14 – Temperature Measurement with Selective Arithmetic Support & Measurable Refactoring  
+**Branch:**  `feature/UC14-TemperatureMeasurementwithSelectiveArithmetic`
+
+### 🎯 Objective
+- Add Temperature measurement category  
+- Support Celsius & Fahrenheit  
+- Restrict invalid arithmetic operations  
+- Refactor measurable behavior  
+
+### ⚠ Special Challenge
+Temperature is **not purely linear like length or weight**  
+Conversion requires formula-based transformation:
+- °F = (°C × 9/5) + 32  
+
+### ✅ Implementation
+- Created `TemperatureUnit` enum  
+- Implemented formula-based conversion logic  
+- Allowed equality comparison  
+- Restricted unsupported arithmetic (e.g., adding two temperatures directly)  
+- Applied measurable abstraction refactoring  
+
+### 🧠 Architectural Enhancement
+- Introduced selective arithmetic capability  
+- Improved domain modeling  
+- Applied behavior-driven restrictions
+- [feature/UC14-TemperatureMeasurementwithSelectiveArithmetic](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src)
+
+---
