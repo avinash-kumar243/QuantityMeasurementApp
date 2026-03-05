@@ -17,24 +17,31 @@ This project was implemented incrementally using:
 
 ---
 
-## 📅 27 Feb 2026  
-### 🔹 UC13 – Centralized Arithmetic Logic (DRY Enforcement)  
-**Branch:**  `feature/UC13-CentralizedArithmeticLogic`
+## 📅 28 Feb 2026  
+### 🔹 UC14 – Temperature Measurement with Selective Arithmetic Support & Measurable Refactoring  
+**Branch:**  `feature/UC14-TemperatureMeasurementwithSelectiveArithmetic`
 
 ### 🎯 Objective
-- Remove duplication across add, subtract, divide  
-- Centralize arithmetic handling  
+- Add Temperature measurement category  
+- Support Celsius & Fahrenheit  
+- Restrict invalid arithmetic operations  
+- Refactor measurable behavior  
+
+### ⚠ Special Challenge
+Temperature is **not purely linear like length or weight**  
+Conversion requires formula-based transformation:
+- °F = (°C × 9/5) + 32  
 
 ### ✅ Implementation
-- Introduced common internal arithmetic handler  
-- Removed repeated conversion code  
-- Improved maintainability  
-- Reduced logic duplication  
-- Strengthened DRY compliance  
+- Created `TemperatureUnit` enum  
+- Implemented formula-based conversion logic  
+- Allowed equality comparison  
+- Restricted unsupported arithmetic (e.g., adding two temperatures directly)  
+- Applied measurable abstraction refactoring  
 
-### 🧠 Engineering Impact
-- Cleaner architecture  
-- Easier future feature additions  
-- Reduced error-prone code blocks  
+### 🧠 Architectural Enhancement
+- Introduced selective arithmetic capability  
+- Improved domain modeling  
+- Applied behavior-driven restrictions  
 
 ---
