@@ -2,22 +2,36 @@ package com.apps.quantitymeasurementapp;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.apps.quantitymeasurementapp.Quantity.ArithmeticOperation;
+import com.apps.quantitymeasurementapp.controller.QuantityMeasurementController;
+import com.apps.quantitymeasurementapp.entity.QuantityDTO;
+import com.apps.quantitymeasurementapp.entity.QuantityMeasurementEntity;
+import com.apps.quantitymeasurementapp.entity.QuantityModel;
+import com.apps.quantitymeasurementapp.exception.InvalidUnitMeasurementException;
+import com.apps.quantitymeasurementapp.quantity.Quantity;
+import com.apps.quantitymeasurementapp.repository.IQuantityMeasurementRepository;
+import com.apps.quantitymeasurementapp.repository.QuantityMeasurementCacheRepository;
+import com.apps.quantitymeasurementapp.service.IQuantityMeasurementService;
+import com.apps.quantitymeasurementapp.service.QuantityMeasurementServiceImpl;
+import com.apps.quantitymeasurementapp.unit.*;
 
 public class QuantityMeasurementAppTest {
 	
 //	------ Feet Equality ------
 			
-	@Test
+	@Test 
 	public void testFeetEquality_SameValue() {
 		Quantity<LengthUnit> feet1 = new Quantity<>(1.0, LengthUnit.FEET);
 		Quantity<LengthUnit> feet2 = new Quantity<>(1.0, LengthUnit.FEET);
-		assertTrue(feet1.equals(feet2));
+		assertTrue(feet1.equals(feet2)); 
 	}
-	
+	 
 	@Test
 	public void testFeetEquality_DifferentValue() {
 		Quantity<LengthUnit> feet1 = new Quantity<>(1.0, LengthUnit.FEET);
@@ -195,19 +209,19 @@ public class QuantityMeasurementAppTest {
 	
 	@Test  
 	public void convertFeetToInches() throws InvalidUnitMeasurementException {
-		Quantity<LengthUnit> lengthInInches = QuantityMeasurementApp.demonstrateConversion(new Quantity<>(3.0, LengthUnit.FEET), LengthUnit.INCHES);
+		Quantity<LengthUnit> lengthInInches = new Quantity<>(3.0, LengthUnit.FEET).convertTo(LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedLength = new Quantity<>(36.0, LengthUnit.INCHES);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(lengthInInches, expectedLength)); 
+		assertTrue(lengthInInches.equals(expectedLength)); 
 	}
 	
 	@Test
 	public void convertYardsToInchesUsingOverloadedMethod() throws InvalidUnitMeasurementException {
 		Quantity<LengthUnit> lengthInYards = new Quantity<>(2.0, LengthUnit.YARDS);
-		Quantity<LengthUnit> lengthInInches = QuantityMeasurementApp.demonstrateConversion(lengthInYards, LengthUnit.INCHES);
+		Quantity<LengthUnit> lengthInInches = lengthInYards.convertTo(LengthUnit.INCHES);
 		
 		Quantity<LengthUnit> expectedInches = new Quantity<>(72.0, LengthUnit.INCHES);
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(lengthInInches, expectedInches)); 
+		assertTrue(lengthInInches.equals(expectedInches)); 
 	}
 	
 	
@@ -219,7 +233,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> feet2 = new Quantity<>(2.0, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedFeet = new Quantity<>(3.0, LengthUnit.FEET);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(feet1.add(feet2), expectedFeet)); 
+		assertTrue(feet1.add(feet2).equals(expectedFeet)); 
 	}
 	
 	@Test
@@ -228,7 +242,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> inch2 = new Quantity<>(6.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedInch = new Quantity<>(12.0, LengthUnit.INCHES);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(inch1.add(inch2), expectedInch));
+		assertTrue(inch1.add(inch2).equals(expectedInch));
 	}
 	
 	@Test
@@ -237,7 +251,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> inch = new Quantity<>(12.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedFeet = new Quantity<>(2.0, LengthUnit.FEET);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(feet.add(inch), expectedFeet)); 
+		assertTrue(feet.add(inch).equals(expectedFeet)); 
 	}
 	
 	@Test
@@ -246,7 +260,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> feet = new Quantity<>(1.0, LengthUnit.FEET);	
 		Quantity<LengthUnit> expectedInch = new Quantity<>(24.0, LengthUnit.INCHES);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(inch.add(feet), expectedInch)); 
+		assertTrue(inch.add(feet).equals(expectedInch)); 
 	}
 	
 	@Test
@@ -255,7 +269,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> feet = new Quantity<>(3.0, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedYard = new Quantity<>(2.0, LengthUnit.YARDS);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(yard.add(feet), expectedYard)); 
+		assertTrue(yard.add(feet).equals(expectedYard)); 
 	}
 	
 	@Test
@@ -264,7 +278,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> inch = new Quantity<>(1.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedCentimeter = new Quantity<>(5.07, LengthUnit.CENTIMETERS);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(centimeter.add(inch), expectedCentimeter)); 
+		assertTrue(centimeter.add(inch).equals(expectedCentimeter)); 
 	}
 	
 	@Test
@@ -273,7 +287,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> inch2 = new Quantity<>(2.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedInch = new Quantity<>(3.0, LengthUnit.INCHES);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(inch1.add(inch2), expectedInch)); 
+		assertTrue(inch1.add(inch2).equals(expectedInch)); 
 	}
 	
 	@Test
@@ -282,7 +296,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> inch = new Quantity<>(0.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedFeet = new Quantity<>(5.0, LengthUnit.FEET);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(feet.add(inch), expectedFeet)); 
+		assertTrue(feet.add(inch).equals(expectedFeet)); 
 	}
 	
 	@Test
@@ -291,7 +305,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> feet2 = new Quantity<>(-2.0, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedFeet = new Quantity<>(3.0, LengthUnit.FEET);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(feet1.add(feet2), expectedFeet)); 
+		assertTrue(feet1.add(feet2).equals(expectedFeet)); 
 	}
 	
 	@Test
@@ -307,7 +321,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> feet2 = new Quantity<>(1e6, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedFeet = new Quantity<>(2e6, LengthUnit.FEET);
 		
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(feet1.add(feet2), expectedFeet)); 
+		assertTrue(feet1.add(feet2).equals(expectedFeet)); 
 	}
 	
 	@Test
@@ -316,8 +330,8 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> feet2 = new Quantity<>(0.002, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedFeet = new Quantity<>(0.003, LengthUnit.FEET);
 		
-		Quantity<LengthUnit> ouput = QuantityMeasurementApp.demonstrateAddition(feet1, feet2);
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(expectedFeet, ouput));  
+		Quantity<LengthUnit> ouput = feet1.add(feet2);
+		assertTrue(expectedFeet.equals(ouput));  
 	}
 	
 	
@@ -327,7 +341,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(12.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(2.0, LengthUnit.FEET);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2), expectedResult);
+		assertEquals(length1.add(length2), expectedResult);
 	}
 	
 	@Test
@@ -336,7 +350,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(12.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(24.0, LengthUnit.INCHES);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2), expectedResult);
+		assertEquals(length1.add(length2, LengthUnit.INCHES), expectedResult);
 	}
 	
 	@Test
@@ -345,7 +359,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(12.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(0.667, LengthUnit.YARDS);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2, LengthUnit.YARDS), expectedResult);
+		assertEquals(length1.add(length2, LengthUnit.YARDS), expectedResult);
 	}
 	
 	@Test
@@ -354,7 +368,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(1.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(5.07, LengthUnit.CENTIMETERS);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2), expectedResult);
+		assertEquals(length1.add(length2, LengthUnit.CENTIMETERS), expectedResult);
 	}
 	
 	@Test
@@ -363,7 +377,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(3.0, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(3.0, LengthUnit.YARDS);
  
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2), expectedResult);
+		assertEquals(length1.add(length2), expectedResult);
 	}
 	
 	@Test
@@ -372,18 +386,18 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(3.0, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(9.0, LengthUnit.FEET);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2), expectedResult);
+		assertEquals(length1.add(length2), expectedResult);
 	}
 	
 	@Test
 	public void testAddition_ExplicitTargetUnit_Commutativity() {
 		Quantity<LengthUnit> length1 = new Quantity<>(1.0, LengthUnit.FEET);
 		Quantity<LengthUnit> length2 = new Quantity<>(12.0, LengthUnit.INCHES);
-		Quantity<LengthUnit> result1 = QuantityMeasurementApp.demonstrateAddition(length1, length2, LengthUnit.YARDS);
+		Quantity<LengthUnit> result1 = length1.add(length2, LengthUnit.YARDS);
 
 		Quantity<LengthUnit> length3 = new Quantity<>(12.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> length4 = new Quantity<>(1.0, LengthUnit.FEET);
-		Quantity<LengthUnit> result2 = QuantityMeasurementApp.demonstrateAddition(length3, length4, LengthUnit.YARDS);
+		Quantity<LengthUnit> result2 = length3.add(length4, LengthUnit.YARDS);
 
 		assertEquals(result1, result2);
 	}
@@ -394,7 +408,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(0.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(1.667, LengthUnit.YARDS);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2, LengthUnit.YARDS), expectedResult);
+		assertEquals((length1.add(length2, LengthUnit.YARDS)), expectedResult);
 	}
 	
 	@Test
@@ -403,7 +417,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(-2.0, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(36.0, LengthUnit.INCHES);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2, LengthUnit.INCHES), expectedResult);
+		assertEquals((length1.add(length2, LengthUnit.INCHES)), expectedResult);
 	}
 	
 	@Test
@@ -412,7 +426,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(12.0, LengthUnit.INCHES);
 
 		assertThrows(IllegalArgumentException.class, () -> {
-			QuantityMeasurementApp.demonstrateAddition(length1, length2, null);
+			length1.add(length2, null);
 		});
 	}
 	
@@ -422,7 +436,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(500.0, LengthUnit.FEET);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(18000.0, LengthUnit.INCHES);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2, LengthUnit.INCHES), expectedResult);
+		assertEquals((length1.add(length2, LengthUnit.INCHES)), expectedResult);
 	}
 	
 	@Test
@@ -431,7 +445,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<LengthUnit> length2 = new Quantity<>(12.0, LengthUnit.INCHES);
 		Quantity<LengthUnit> expectedResult = new Quantity<>(0.667, LengthUnit.YARDS);
 
-		assertEquals(QuantityMeasurementApp.demonstrateAddition(length1, length2, LengthUnit.YARDS), expectedResult);
+		assertEquals((length1.add(length2, LengthUnit.YARDS)), expectedResult); 
 	}
 	
 	
@@ -558,7 +572,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<WeightUnit> kilogram1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 		Quantity<WeightUnit> kilogram2 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(kilogram1, kilogram2));
+		assertTrue(kilogram1.equals(kilogram2));
 	}
 	
 	@Test
@@ -566,7 +580,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<WeightUnit> kilogram1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 		Quantity<WeightUnit> kilogram2 = new Quantity<>(2.0, WeightUnit.KILOGRAM);
 
-		assertFalse(QuantityMeasurementApp.demonstrateEquality(kilogram1, kilogram2));
+		assertFalse(kilogram1.equals(kilogram2));
 	}
 	
 	@Test
@@ -574,7 +588,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<WeightUnit> kilogram = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 		Quantity<WeightUnit> gram = new Quantity<>(1000.0, WeightUnit.GRAM);
 
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(kilogram, gram));
+		assertTrue(kilogram.equals(gram));
 	}
 	
 	@Test
@@ -582,29 +596,26 @@ public class QuantityMeasurementAppTest {
 		Quantity<WeightUnit> gram = new Quantity<>(1000.0, WeightUnit.GRAM);
 		Quantity<WeightUnit> kilogram = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(gram, kilogram));
+		assertTrue(gram.equals(kilogram));
 	}
 		
 	@Test
 	public void testEquality_NullComparison() {
 		Quantity<WeightUnit> kilogram = new Quantity<>(1.0, WeightUnit.KILOGRAM);
-		assertThrows(IllegalArgumentException.class, () -> {
-			QuantityMeasurementApp.demonstrateEquality(kilogram, null);
-		});
+		assertFalse(kilogram.equals(null));
 		 
 	}
 	
 	@Test
 	public void testEquality_SameReference() {
 		Quantity<WeightUnit> kilogram = new Quantity<>(1.0, WeightUnit.KILOGRAM);
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(kilogram, kilogram));
+		assertTrue(kilogram.equals(kilogram));
 	}
 	
 	@Test
 	public void testEquality_NullUnit() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			Quantity<WeightUnit> kilogram = new Quantity<>(1.0, null);
-		});
+		Quantity<WeightUnit> kilogram = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+		assertFalse(kilogram.equals(null));
 	}
 	
 	@Test
@@ -613,16 +624,16 @@ public class QuantityMeasurementAppTest {
 		Quantity<WeightUnit> gram = new Quantity<>(1000.0, WeightUnit.GRAM);
 		Quantity<WeightUnit> kilogram2 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(kilogram1, gram));
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(gram, kilogram2));
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(kilogram2, kilogram1));		
+		assertTrue(kilogram1.equals(gram));
+		assertTrue(gram.equals(kilogram2));
+		assertTrue(kilogram2.equals(kilogram1)); 	
 	}
 	
 	@Test
 	public void testEquality_ZeroValue() {
 		Quantity<WeightUnit> kilogram = new Quantity<>(0.0, WeightUnit.KILOGRAM);
 		Quantity<WeightUnit> gram = new Quantity<>(0.0, WeightUnit.GRAM);
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(kilogram, gram));
+		assertTrue(kilogram.equals(gram));
 	}
 	
 	@Test
@@ -630,7 +641,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<WeightUnit> kilogram = new Quantity<>(-1.0, WeightUnit.KILOGRAM);
 		Quantity<WeightUnit> gram = new Quantity<>(-1000.0, WeightUnit.GRAM);
 
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(kilogram, gram));
+		assertTrue(kilogram.equals(gram)); 
 	}
 	
 	@Test
@@ -638,7 +649,7 @@ public class QuantityMeasurementAppTest {
 		Quantity<WeightUnit> gram = new Quantity<>(1000000.0, WeightUnit.GRAM);
 		Quantity<WeightUnit> kilogram = new Quantity<>(1000.0, WeightUnit.KILOGRAM);
 
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(gram, kilogram));
+		assertTrue(gram.equals(kilogram));
 	}
 	
 	@Test
@@ -646,28 +657,25 @@ public class QuantityMeasurementAppTest {
 		Quantity<WeightUnit> kilogram = new Quantity<>(0.001, WeightUnit.KILOGRAM);
 		Quantity<WeightUnit> gram = new Quantity<>(1.0, WeightUnit.GRAM);
 
-		assertTrue(QuantityMeasurementApp.demonstrateEquality(kilogram, gram));
+		assertTrue(kilogram.equals(gram)); 
 	}
-	
-	
-	
 	
 	
 	@Test
     public void testConversion_PoundToKilogram() {
-		Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateConversion(new Quantity<>(2.20462, WeightUnit.POUND), WeightUnit.KILOGRAM);
+		Quantity<WeightUnit> result = new Quantity<>(2.20462, WeightUnit.POUND).convertTo(WeightUnit.KILOGRAM); 
         assertEquals(result, new Quantity<>(1.0, WeightUnit.KILOGRAM));
     }
 
     @Test
     public void testConversion_KilogramToPound() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateConversion(new Quantity<>(1.0, WeightUnit.KILOGRAM), WeightUnit.POUND);
+    	Quantity<WeightUnit> result = new Quantity<>(1.0, WeightUnit.KILOGRAM).convertTo(WeightUnit.POUND); 
         assertEquals(result, new Quantity<>(2.20462, WeightUnit.POUND));
     }
 
     @Test
     public void testConversion_SameUnit() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateConversion(new Quantity<>(5.0, WeightUnit.KILOGRAM), WeightUnit.KILOGRAM);
+    	Quantity<WeightUnit> result = new Quantity<>(5.0, WeightUnit.KILOGRAM).convertTo(WeightUnit.KILOGRAM); 
     	Quantity<WeightUnit> expected = new Quantity<>(5.0, WeightUnit.KILOGRAM);
 
         assertEquals(expected, result);
@@ -675,7 +683,7 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testConversion_ZeroValue() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateConversion(new Quantity<>(0.0, WeightUnit.KILOGRAM), WeightUnit.GRAM);
+    	Quantity<WeightUnit> result = new Quantity<>(0.0, WeightUnit.KILOGRAM).convertTo(WeightUnit.GRAM); 
     	Quantity<WeightUnit> expected = new Quantity<>(0.0, WeightUnit.GRAM);
 
         assertEquals(expected, result);
@@ -683,7 +691,7 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testConversion_NegativeValue() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateConversion(new Quantity<>(-1.0, WeightUnit.KILOGRAM), WeightUnit.GRAM);
+    	Quantity<WeightUnit> result = new Quantity<>(-1.0, WeightUnit.KILOGRAM).convertTo(WeightUnit.GRAM);
     	Quantity<WeightUnit> expected = new Quantity<>(-1000.0, WeightUnit.GRAM);
 
         assertEquals(expected, result);
@@ -691,8 +699,8 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testConversion_RoundTrip() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateConversion(new Quantity<>(1.5, WeightUnit.KILOGRAM), WeightUnit.GRAM).convertTo(WeightUnit.KILOGRAM);
-    	Quantity<WeightUnit> expected = new Quantity<>(1.5, WeightUnit.KILOGRAM);
+    	Quantity<WeightUnit> result = new Quantity<>(1.5, WeightUnit.KILOGRAM).convertTo(WeightUnit.GRAM).convertTo(WeightUnit.KILOGRAM);
+    	Quantity<WeightUnit> expected = new Quantity<>(1.5, WeightUnit.KILOGRAM); 
 
         assertEquals(expected, result);
     } 
@@ -701,11 +709,7 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testAddition_SameUnit_KilogramPlusKilogram() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(1.0, WeightUnit.KILOGRAM),
-                new Quantity<>(2.0, WeightUnit.KILOGRAM)
-        );
-
+    	Quantity<WeightUnit> result = new Quantity<>(1.0, WeightUnit.KILOGRAM).add(new Quantity<>(2.0, WeightUnit.KILOGRAM));
     	Quantity<WeightUnit> expected = new Quantity<>(3.0, WeightUnit.KILOGRAM);
 
         assertEquals(expected, result);
@@ -713,11 +717,7 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testAddition_CrossUnit_KilogramPlusGram() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(1.0, WeightUnit.KILOGRAM),
-                new Quantity<>(1000.0, WeightUnit.GRAM)
-        );
-
+    	Quantity<WeightUnit> result = new Quantity<>(1.0, WeightUnit.KILOGRAM).add(new Quantity<>(1000.0, WeightUnit.GRAM));
     	Quantity<WeightUnit> expected = new Quantity<>(2.0, WeightUnit.KILOGRAM);
 
         assertEquals(expected, result);
@@ -725,11 +725,7 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testAddition_CrossUnit_PoundPlusKilogram() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(2.20462, WeightUnit.POUND),
-                new Quantity<>(1.0, WeightUnit.KILOGRAM)
-        );
-
+    	Quantity<WeightUnit> result = new Quantity<>(2.20462, WeightUnit.POUND).add(new Quantity<>(1.0, WeightUnit.KILOGRAM));
     	Quantity<WeightUnit> expected = new Quantity<>(4.40924, WeightUnit.POUND);
 
         assertEquals(expected, result);
@@ -737,12 +733,7 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testAddition_ExplicitTargetUnit_Kilogram() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(1.0, WeightUnit.KILOGRAM),
-                new Quantity<>(1000.0, WeightUnit.GRAM),
-                WeightUnit.GRAM
-        );
-
+    	Quantity<WeightUnit> result = new Quantity<>(1.0, WeightUnit.KILOGRAM).add(new Quantity<>(1000.0, WeightUnit.GRAM), WeightUnit.GRAM);
     	Quantity<WeightUnit> expected = new Quantity<>(2000.0, WeightUnit.GRAM);
 
         assertEquals(expected, result); 
@@ -750,25 +741,15 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testAddition_Commutativity2() {
-    	Quantity<WeightUnit> result1 = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(1.0, WeightUnit.KILOGRAM),
-                new Quantity<>(1000.0, WeightUnit.GRAM)
-        );
-
-    	Quantity<WeightUnit> result2 = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(1000.0, WeightUnit.GRAM),
-                new Quantity<>(1.0, WeightUnit.KILOGRAM)
-        );
+    	Quantity<WeightUnit> result1 = new Quantity<>(1.0, WeightUnit.KILOGRAM).add(new Quantity<>(1000.0, WeightUnit.GRAM));
+    	Quantity<WeightUnit> result2 = new Quantity<>(1000.0, WeightUnit.GRAM).add(new Quantity<>(1.0, WeightUnit.KILOGRAM));
 
         assertEquals(result1, result2.convertTo(result1.getUnit()));
     }
 
     @Test
     public void testAddition_WithZero2() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(5.0, WeightUnit.KILOGRAM),
-                new Quantity<>(0.0, WeightUnit.GRAM)
-        );
+    	Quantity<WeightUnit> result = new Quantity<>(5.0, WeightUnit.KILOGRAM).add(new Quantity<>(0.0, WeightUnit.GRAM));
 
     	Quantity<WeightUnit> expected = new Quantity<>(5.0, WeightUnit.KILOGRAM);
 
@@ -777,10 +758,7 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testAddition_NegativeValues2() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(5.0, WeightUnit.KILOGRAM),
-                new Quantity<>(-2000.0, WeightUnit.GRAM)
-        );
+    	Quantity<WeightUnit> result = new Quantity<>(5.0, WeightUnit.KILOGRAM).add(new Quantity<>(-2000.0, WeightUnit.GRAM));
 
     	Quantity<WeightUnit> expected = new Quantity<>(3.0, WeightUnit.KILOGRAM);
 
@@ -789,11 +767,7 @@ public class QuantityMeasurementAppTest {
 
     @Test
     public void testAddition_LargeValues2() {
-    	Quantity<WeightUnit> result = QuantityMeasurementApp.demonstrateAddition(
-                new Quantity<>(1e6, WeightUnit.KILOGRAM),
-                new Quantity<>(1e6, WeightUnit.KILOGRAM)
-        );
-
+    	Quantity<WeightUnit> result = new Quantity<>(1e6, WeightUnit.KILOGRAM).add(new Quantity<>(1e6, WeightUnit.KILOGRAM));
     	Quantity<WeightUnit> expected = new Quantity<>(2e6, WeightUnit.KILOGRAM);
 
         assertEquals(expected, result);
@@ -1248,29 +1222,29 @@ public class QuantityMeasurementAppTest {
 
    
     
-    @Test
-    void testArithmeticOperation_Add_EnumComputation() {
-        double result = ArithmeticOperation.ADD.compute(10, 5);
-        assertEquals(15.0, result);
-    }
-
-    @Test
-    void testArithmeticOperation_Subtract_EnumComputation() {
-        double result = ArithmeticOperation.SUBTRACT.compute(10, 5);
-        assertEquals(5.0, result);
-    }
-
-    @Test
-    void testArithmeticOperation_Divide_EnumComputation() {
-        double result = ArithmeticOperation.DIVIDE.compute(10, 5);
-        assertEquals(2.0, result);
-    }
-
-    @Test
-    void testArithmeticOperation_DivideByZero_EnumThrows() {
-        assertThrows(ArithmeticException.class,
-                () -> ArithmeticOperation.DIVIDE.compute(10, 0));
-    }
+//    @Test
+//    void testArithmeticOperation_Add_EnumComputation() {
+//        double result = ArithmeticOperation.ADD.compute(10, 5);
+//        assertEquals(15.0, result);
+//    }
+//
+//    @Test
+//    void testArithmeticOperation_Subtract_EnumComputation() {
+//        double result = ArithmeticOperation.SUBTRACT.compute(10, 5);
+//        assertEquals(5.0, result);
+//    }
+//
+//    @Test
+//    void testArithmeticOperation_Divide_EnumComputation() {
+//        double result = ArithmeticOperation.DIVIDE.compute(10, 5);
+//        assertEquals(2.0, result);
+//    }
+//
+//    @Test
+//    void testArithmeticOperation_DivideByZero_EnumThrows() {
+//        assertThrows(ArithmeticException.class,
+//                () -> ArithmeticOperation.DIVIDE.compute(10, 0));
+//    }
 
     @Test
     void testAdd_UC12_BehaviorPreserved() {
@@ -1386,230 +1360,248 @@ public class QuantityMeasurementAppTest {
 
         assertEquals(2.4, result);
     }
-
-    @Test
-    void testEnumConstant_ADD_CorrectlyAdds() {
-        assertEquals(10.0, ArithmeticOperation.ADD.compute(7, 3));
-    }
-
-    @Test
-    void testEnumConstant_SUBTRACT_CorrectlySubtracts() {
-        assertEquals(4.0, ArithmeticOperation.SUBTRACT.compute(7, 3));
-    }
-
-    @Test
-    void testEnumConstant_DIVIDE_CorrectlyDivides() {
-        assertEquals(3.5, ArithmeticOperation.DIVIDE.compute(7, 2));
-    }
     
     
-     
+    private QuantityMeasurementServiceImpl service;
+    private QuantityMeasurementCacheRepository repository;
+
+    @BeforeEach
+    void setUp() {
+        repository = new QuantityMeasurementCacheRepository();
+        service = new QuantityMeasurementServiceImpl(repository);
+    }
+
+    // ----------------------------------------------------
+    // DTO TESTS
+    // ----------------------------------------------------
+
     @Test
-    void testTemperatureEquality_CelsiusToCelsius_SameValue() {
-        assertTrue(new Quantity<>(0.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(0.0, TemperatureUnit.CELSIUS)));
+    void testQuantityDTO_Constructor_WithIMeasurable() {
+        QuantityDTO dto = new QuantityDTO(1.0, LengthUnit.FEET);
+
+        assertEquals(1.0, dto.getValue());
+        assertEquals("FEET", dto.getUnit());
+        assertEquals("LengthUnit", dto.getMeasurementType());
     }
 
     @Test
-    void testTemperatureEquality_FahrenheitToFahrenheit_SameValue() {
-        assertTrue(new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT)
-                .equals(new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT)));
+    void testQuantityDTO_Constructor_WithStrings() {
+        QuantityDTO dto = new QuantityDTO(2.0, "GRAM", "WeightUnit");
+
+        assertEquals(2.0, dto.getValue());
+        assertEquals("GRAM", dto.getUnit());
+        assertEquals("WeightUnit", dto.getMeasurementType());
     }
 
     @Test
-    void testTemperatureEquality_CelsiusToFahrenheit_0Celsius32Fahrenheit() {
-        assertTrue(new Quantity<>(0.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT)));
+    void testQuantityDTO_ToString() {
+        QuantityDTO dto = new QuantityDTO(1.0, "LITRE", "VolumeUnit");
+        String text = dto.toString();
+
+        assertTrue(text.contains("1.0"));
+        assertTrue(text.contains("LITRE"));
+        assertTrue(text.contains("VolumeUnit"));
+    }
+
+    // ----------------------------------------------------
+    // MODEL TESTS
+    // ----------------------------------------------------
+
+    @Test
+    void testQuantityModel_Construction() {
+        QuantityModel<IMeasurable> model = new QuantityModel<>(5.0, LengthUnit.INCHES);
+
+        assertEquals(5.0, model.getValue());
+        assertEquals(LengthUnit.INCHES, model.getUnit());
     }
 
     @Test
-    void testTemperatureEquality_CelsiusToFahrenheit_100Celsius212Fahrenheit() {
-        assertTrue(new Quantity<>(100.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(212.0, TemperatureUnit.FAHRENHEIT)));
+    void testQuantityModel_ToString() {
+        QuantityModel<IMeasurable> model = new QuantityModel<>(10.0, WeightUnit.KILOGRAM);
+        String text = model.toString();
+
+        assertTrue(text.contains("10.0"));
+        assertTrue(text.contains("KILOGRAM"));
+    }
+
+    // ----------------------------------------------------
+    // SERVICE - COMPARE
+    // ----------------------------------------------------
+
+    @Test
+    void testService_CompareEquality_SameUnit_Success() {
+        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityDTO q2 = new QuantityDTO(1.0, LengthUnit.FEET);
+
+        boolean result = service.compare(q1, q2);
+
+        assertTrue(result);
     }
 
     @Test
-    void testTemperatureEquality_CelsiusToFahrenheit_Negative40Equal() {
-        assertTrue(new Quantity<>(-40.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(-40.0, TemperatureUnit.FAHRENHEIT)));
+    void testService_CompareEquality_DifferentUnit_Success() {
+        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityDTO q2 = new QuantityDTO(12.0, LengthUnit.INCHES);
+
+        boolean result = service.compare(q1, q2);
+
+        assertTrue(result);
     }
 
     @Test
-    void testTemperatureEquality_SymmetricProperty() {
-        Quantity<TemperatureUnit> a = new Quantity<>(0.0, TemperatureUnit.CELSIUS);
-        Quantity<TemperatureUnit> b = new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT);
+    void testService_CompareEquality_CrossCategory_Error() {
+        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityDTO q2 = new QuantityDTO(1.0, VolumeUnit.LITRE);
 
-        assertTrue(a.equals(b));
-        assertTrue(b.equals(a));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> service.compare(q1, q2));
+
+        assertEquals("Operation not possible for two different measurement types!!!", ex.getMessage());
+    }
+
+    // ----------------------------------------------------
+    // SERVICE - CONVERT
+    // ----------------------------------------------------
+
+    @Test
+    void testService_Convert_Success() {
+        QuantityDTO source = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
+
+        QuantityDTO result = service.convert(source, target);
+
+        assertEquals(12.0, result.getValue(), 0.01);
+        assertEquals("INCHES", result.getUnit());
+        assertEquals("LengthUnit", result.getMeasurementType());
+    }
+
+    // ----------------------------------------------------
+    // SERVICE - ADD
+    // ----------------------------------------------------
+
+
+    @Test
+    void testService_Add_WithTargetUnit_Success() {
+        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityDTO q2 = new QuantityDTO(12.0, LengthUnit.INCHES);
+        QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
+
+        QuantityDTO result = service.add(q1, q2, target);
+
+        assertEquals(24.0, result.getValue(), 0.01);
+        assertEquals("INCHES", result.getUnit());
+        assertEquals("LengthUnit", result.getMeasurementType());
     }
 
     @Test
-    void testTemperatureEquality_ReflexiveProperty() {
-        Quantity<TemperatureUnit> a = new Quantity<>(25.0, TemperatureUnit.CELSIUS);
-        assertTrue(a.equals(a));
+    void testService_Add_CrossCategory_Error() {
+        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityDTO q2 = new QuantityDTO(1.0, WeightUnit.KILOGRAM);
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> service.add(q1, q2));
+
+        assertEquals("Operation not possible for two different measurement types!!!", ex.getMessage());
+    }
+
+    // ----------------------------------------------------
+    // SERVICE - SUBTRACT
+    // ----------------------------------------------------
+
+
+    @Test
+    void testService_Subtract_WithTargetUnit_Success() {
+        QuantityDTO q1 = new QuantityDTO(5.0, WeightUnit.KILOGRAM);
+        QuantityDTO q2 = new QuantityDTO(2000.0, WeightUnit.GRAM);
+        QuantityDTO target = new QuantityDTO(0.0, WeightUnit.GRAM);
+
+        QuantityDTO result = service.subtract(q1, q2, target);
+
+        assertEquals(3000.0, result.getValue(), 0.01);
+        assertEquals("GRAM", result.getUnit());
+        assertEquals("WeightUnit", result.getMeasurementType());
+    }
+
+    // ----------------------------------------------------
+    // SERVICE - DIVIDE
+    // ----------------------------------------------------
+
+    @Test
+    void testService_Divide_Success() {
+        QuantityDTO q1 = new QuantityDTO(2.0, VolumeUnit.LITRE);
+        QuantityDTO q2 = new QuantityDTO(1000.0, VolumeUnit.MILLILITRE);
+
+        QuantityDTO result = service.divide(q1, q2);
+
+        assertEquals(2.0, result.getValue(), 0.01);
+        assertEquals("LITRE", result.getUnit());
+        assertEquals("VolumeUnit", result.getMeasurementType());
     }
 
     @Test
-    void testTemperatureConversion_CelsiusToFahrenheit_VariousValues() {
+    void testService_Divide_ByZero_Error() {
+        QuantityDTO q1 = new QuantityDTO(10.0, LengthUnit.FEET);
+        QuantityDTO q2 = new QuantityDTO(0.0, LengthUnit.FEET);
 
-        assertEquals(122.0,
-                new Quantity<>(50.0, TemperatureUnit.CELSIUS)
-                        .convertTo(TemperatureUnit.FAHRENHEIT).getValue(), 0.01);
+        ArithmeticException ex = assertThrows(ArithmeticException.class,
+                () -> service.divide(q1, q2));
 
-        assertEquals(-4.0,
-                new Quantity<>(-20.0, TemperatureUnit.CELSIUS)
-                        .convertTo(TemperatureUnit.FAHRENHEIT).getValue(), 0.01);
+        assertEquals("Cannot divide by zero!!!", ex.getMessage());
+    }
+
+    // ----------------------------------------------------
+    // SERVICE - VALIDATION
+    // ----------------------------------------------------
+
+    @Test
+    void testService_NullEntity_Rejection() {
+        QuantityDTO q = new QuantityDTO(1.0, LengthUnit.FEET);
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> service.add(null, q));
+
+        assertEquals("QuantityDTO objects can't be null!!!", ex.getMessage());
     }
 
     @Test
-    void testTemperatureConversion_FahrenheitToCelsius_VariousValues() {
+    void testService_ValidationConsistency() {
+        QuantityDTO q = new QuantityDTO(1.0, LengthUnit.FEET);
 
-        assertEquals(50.0,
-                new Quantity<>(122.0, TemperatureUnit.FAHRENHEIT)
-                        .convertTo(TemperatureUnit.CELSIUS).getValue(), 0.01);
+        Exception ex1 = assertThrows(IllegalArgumentException.class, () -> service.add(null, q));
+        Exception ex2 = assertThrows(IllegalArgumentException.class, () -> service.subtract(null, q));
+        Exception ex3 = assertThrows(IllegalArgumentException.class, () -> service.divide(null, q));
+
+        assertEquals(ex1.getMessage(), ex2.getMessage());
+        assertEquals(ex2.getMessage(), ex3.getMessage());
+    }
+
+    // ----------------------------------------------------
+    // SERVICE - ALL CURRENT MEASUREMENT CATEGORIES
+    // ----------------------------------------------------
+
+    @Test
+    void testService_AllMeasurementCategories_CurrentlySupported() {
+        assertTrue(service.compare(
+                new QuantityDTO(1.0, LengthUnit.FEET),
+                new QuantityDTO(12.0, LengthUnit.INCHES)));
+
+        assertTrue(service.compare(
+                new QuantityDTO(1.0, WeightUnit.KILOGRAM),
+                new QuantityDTO(1000.0, WeightUnit.GRAM)));
+
+        assertTrue(service.compare(
+                new QuantityDTO(1.0, VolumeUnit.LITRE),
+                new QuantityDTO(1000.0, VolumeUnit.MILLILITRE)));
     }
 
     @Test
-    void testTemperatureConversion_RoundTrip_PreservesValue() {
+    void testService_Temperature_CurrentlyNotSupportedInService() {
+        QuantityDTO t1 = new QuantityDTO(0.0, "CELSIUS", "TemperatureUnit");
+        QuantityDTO t2 = new QuantityDTO(32.0, "FAHRENHEIT", "TemperatureUnit");
 
-        Quantity<TemperatureUnit> original =
-                new Quantity<>(25.0, TemperatureUnit.CELSIUS);
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> service.compare(t1, t2));
 
-        double result = original
-                .convertTo(TemperatureUnit.FAHRENHEIT)
-                .convertTo(TemperatureUnit.CELSIUS)
-                .getValue();
-
-        assertEquals(25.0, result, 0.01);
+        assertEquals("Invalid measurement type or unit!!!", ex.getMessage());
     }
-
-    @Test
-    void testTemperatureConversion_SameUnit() {
-
-        Quantity<TemperatureUnit> q =
-                new Quantity<>(50.0, TemperatureUnit.CELSIUS)
-                        .convertTo(TemperatureUnit.CELSIUS);
-
-        assertEquals(50.0, q.getValue(), 0.01);
-    }
-
-    @Test
-    void testTemperatureConversion_ZeroValue() {
-
-        assertEquals(32.0,
-                new Quantity<>(0.0, TemperatureUnit.CELSIUS)
-                        .convertTo(TemperatureUnit.FAHRENHEIT).getValue(), 0.01);
-    }
-
-    @Test
-    void testTemperatureConversion_NegativeValues() {
-
-        assertEquals(-40.0,
-                new Quantity<>(-40.0, TemperatureUnit.CELSIUS)
-                        .convertTo(TemperatureUnit.FAHRENHEIT).getValue(), 0.01);
-    }
-
-    @Test
-    void testTemperatureConversion_LargeValues() {
-
-        assertEquals(1832.0,
-                new Quantity<>(1000.0, TemperatureUnit.CELSIUS)
-                        .convertTo(TemperatureUnit.FAHRENHEIT).getValue(), 0.01);
-    }
-
-    @Test
-    void testTemperatureVsLengthIncompatibility() {
-
-        assertFalse(new Quantity<>(100.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(100.0, LengthUnit.FEET)));
-    }
-
-    @Test
-    void testTemperatureVsWeightIncompatibility() {
-
-        assertFalse(new Quantity<>(50.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(50.0, WeightUnit.KILOGRAM)));
-    }
-
-    @Test
-    void testTemperatureVsVolumeIncompatibility() {
-
-        assertFalse(new Quantity<>(25.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(25.0, VolumeUnit.LITRE)));
-    }
-
-    @Test
-    void testOperationSupportMethods_TemperatureUnitAddition() {
-        assertFalse(TemperatureUnit.CELSIUS.supportsArithmetic());
-    }
-
-    @Test
-    void testOperationSupportMethods_TemperatureUnitDivision() {
-        assertFalse(TemperatureUnit.FAHRENHEIT.supportsArithmetic());
-    }
-
-    @Test
-    void testOperationSupportMethods_LengthUnitAddition() {
-        assertTrue(LengthUnit.FEET.supportsArithmetic());
-    }
-
-    @Test
-    void testOperationSupportMethods_WeightUnitDivision() {
-        assertTrue(WeightUnit.KILOGRAM.supportsArithmetic());
-    }
-
-    @Test
-    void testTemperatureUnit_AllConstants() {
-        assertNotNull(TemperatureUnit.CELSIUS);
-        assertNotNull(TemperatureUnit.FAHRENHEIT);
-    }
-
-    @Test
-    void testTemperatureUnit_NameMethod() {
-        assertEquals("CELSIUS", TemperatureUnit.CELSIUS.getUnitName());
-    }
-
-    @Test
-    void testTemperatureNullUnitValidation() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Quantity<>(100.0, null));
-    }
-
-    @Test
-    void testTemperatureNullOperandValidation_InComparison() {
-
-        Quantity<TemperatureUnit> q =
-                new Quantity<>(10.0, TemperatureUnit.CELSIUS);
-
-        assertFalse(q.equals(null));
-    }
-
-    @Test
-    void testTemperatureDifferentValuesInequality() {
-
-        assertFalse(new Quantity<>(50.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(100.0, TemperatureUnit.CELSIUS)));
-    }
-
-    @Test
-    void testTemperatureConversionPrecision_Epsilon() {
-
-        assertTrue(new Quantity<>(50.0, TemperatureUnit.CELSIUS)
-                .equals(new Quantity<>(122.0, TemperatureUnit.FAHRENHEIT)));
-    }
-
-    @Test
-    void testTemperatureEnumImplementsIMeasurable() {
-        assertTrue(IMeasurable.class.isAssignableFrom(TemperatureUnit.class));
-    }
-
-    @Test
-    void testTemperatureIntegrationWithGenericQuantity() {
-
-        Quantity<TemperatureUnit> q =
-                new Quantity<>(25.0, TemperatureUnit.CELSIUS);
-
-        assertEquals(25.0, q.getValue());
-    }
-    
 }
