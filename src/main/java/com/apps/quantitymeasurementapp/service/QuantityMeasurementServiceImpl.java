@@ -3,6 +3,9 @@ package com.apps.quantitymeasurementapp.service;
 import com.apps.quantitymeasurementapp.entity.QuantityDTO;
 import com.apps.quantitymeasurementapp.entity.QuantityMeasurementEntity;
 import com.apps.quantitymeasurementapp.entity.QuantityModel;
+import com.apps.quantitymeasurementapp.exception.CategoryMismatchException;
+import com.apps.quantitymeasurementapp.exception.InvalidUnitMeasurementException;
+import com.apps.quantitymeasurementapp.exception.QuantityMeasurementException;
 import com.apps.quantitymeasurementapp.quantity.Quantity;
 import com.apps.quantitymeasurementapp.repository.IQuantityMeasurementRepository;
 import com.apps.quantitymeasurementapp.unit.IMeasurable;
@@ -136,34 +139,38 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	// Helper method for addition
 	private void validate(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
 		if(thisQuantityDTO == null || thatQuantityDTO == null) {
-			throw new IllegalArgumentException("QuantityDTO objects can't be null!!!");
+			throw new QuantityMeasurementException("QuantityDTO objects can't be null!!!");
 		}
 		
 		if(!thisQuantityDTO.getMeasurementType().equals(thatQuantityDTO.getMeasurementType())) {
-			throw new IllegalArgumentException("Operation not possible for two different measurement types!!!");
+			throw new CategoryMismatchException("Operation not possible for two different measurement types!!!");
 		}
 		
 		if(!Double.isFinite(thisQuantityDTO.getValue()) || !Double.isFinite(thatQuantityDTO.getValue())) {
-			throw new IllegalArgumentException("Values can't be null!!!");
+			throw new QuantityMeasurementException("Values can't be null!!!");
 		}
 	}
 	
 	private void validate(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetDTO) {
 		if(thisQuantityDTO == null || thatQuantityDTO == null || targetDTO == null) {
-			throw new IllegalArgumentException("QuantityDTO objects can't be null!!!");
+			throw new QuantityMeasurementException("QuantityDTO objects can't be null!!!");
 		}
 		
 		if((!thisQuantityDTO.getMeasurementType().equals(thatQuantityDTO.getMeasurementType())) || (!thisQuantityDTO.getMeasurementType().equals(targetDTO.getMeasurementType()))) {
-			throw new IllegalArgumentException("Operation not possible n two different measurement types!!!");
+			throw new CategoryMismatchException("Operation not possible n two different measurement types!!!");
 		}
 		
 		if(!Double.isFinite(thisQuantityDTO.getValue()) || !Double.isFinite(thatQuantityDTO.getValue()) || !Double.isFinite(targetDTO.getValue())) {
-			throw new IllegalArgumentException("Values can't be null!!!"); 
+			throw new QuantityMeasurementException("Values can't be null!!!"); 
 		}
 	}
 	
 	// Helper method to convert QuantityDTO object to QuantityModel object
 	public QuantityModel<IMeasurable> convertToQuantityModel(QuantityDTO dto) {
+		if(dto == null) {
+            throw new QuantityMeasurementException("QuantityDTO object can't be null!!!");
+		}
+		
 		String measurementType = dto.getMeasurementType();
 		String unitName = dto.getUnit();
 		IMeasurable unit;
@@ -186,7 +193,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 				break;
 				 
 			default:
-				throw new IllegalArgumentException("Invalid measurement type or unit!!!");
+				throw new InvalidUnitMeasurementException("Invalid measurement type or unit!!!");
 		}
 		
 		return new QuantityModel<IMeasurable>(dto.getValue(), unit); 
