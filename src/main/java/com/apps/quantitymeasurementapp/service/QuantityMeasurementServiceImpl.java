@@ -17,7 +17,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	}
 
 	private enum Operation {
-		COMPARISON, CONVERSION, ARITHMETIC;
+		COMPARISON, CONVERSION, ADD_WITHOUT_TARGET, ADD_WITH_TARGET, SUBTRACT_WITHOUT_TARGET, SUBTRACT_WITH_TARGET, DIVIDE; 
 	}
 		
 	
@@ -63,7 +63,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    Quantity<IMeasurable> result = q1.add(q2);
 
 		// Step 4 : save value and unit to repository
-	    saveOperation(thisQuantityDTO, thatQuantityDTO, "ADD", result);
+	    saveOperation(thisQuantityDTO, thatQuantityDTO, Operation.ADD_WITHOUT_TARGET, result);
 
 		// Step 5 : Return QunatityDTO object to controller
 	    return convertToDTO(result); 
@@ -83,7 +83,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 		Quantity<IMeasurable> result = q1.add(q2, targetModel.getUnit());
 		
 		// Step 4 : save value and unit to repository
-		saveOperation(thisQuantityDTO, thatQuantityDTO, "ADD", result);
+		saveOperation(thisQuantityDTO, thatQuantityDTO, Operation.ADD_WITH_TARGET, result);
 		
 		// Step 5 : Return QunatityDTO object to controller
 		 return convertToDTO(result); 
@@ -98,7 +98,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
 	    Quantity<IMeasurable> result = q1.subtract(q2);
 
-	    saveOperation(thisQuantityDTO, thatQuantityDTO, "SUBTRACT", result);
+	    saveOperation(thisQuantityDTO, thatQuantityDTO, Operation.SUBTRACT_WITHOUT_TARGET, result);
 
 	    return convertToDTO(result);
 	}
@@ -113,7 +113,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
 	    Quantity<IMeasurable> result = q1.subtract(q2, targetQuantity.getUnit());
 
-	    saveOperation(thisQuantityDTO, thatQuantityDTO, "SUBTRACT", result);
+	    saveOperation(thisQuantityDTO, thatQuantityDTO, Operation.SUBTRACT_WITH_TARGET, result);
 
 	    return convertToDTO(result);
 	}
@@ -126,6 +126,8 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    Quantity<IMeasurable> q2 = convertToQuantity(thatQuantityDTO);
 
 	    double result = q1.divide(q2);
+	    
+	    
 
 	    return new QuantityDTO(result, q1.getUnit());
 	}
@@ -179,9 +181,9 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 				unit = VolumeUnit.valueOf(unitName);
 				break;
 				
-//			case "TemperatureUnit":
-//				unit = TemperatureUnit.valueOf(unitName);
-//				break;
+			case "TemperatureUnit":
+				unit = TemperatureUnit.valueOf(unitName);
+				break;
 				 
 			default:
 				throw new IllegalArgumentException("Invalid measurement type or unit!!!");
@@ -195,13 +197,13 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    return new Quantity<>(model.getValue(), model.getUnit());
 	}
 	
-	private void saveOperation(QuantityDTO dto1, QuantityDTO dto2, String operation, Quantity<IMeasurable> result) {
+	private void saveOperation(QuantityDTO dto1, QuantityDTO dto2, Operation arithmetic, Quantity<IMeasurable> result) {
 	    QuantityModel<IMeasurable> resultModel = new QuantityModel<>(result.getValue(), result.getUnit());
 
 	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity(
 	            convertToQuantityModel(dto1),
 	            convertToQuantityModel(dto2),
-	            operation,
+	            arithmetic.name(),
 	            resultModel
 	    );
 

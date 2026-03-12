@@ -33,11 +33,4 @@ public enum VolumeUnit implements IMeasurable {
 	public String getMeasurementType() {
 		return this.getClass().getSimpleName(); 
 	}
-
-
-	@Override
-	public IMeasurable getUnitInstance(String unitName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

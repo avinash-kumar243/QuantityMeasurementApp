@@ -39,9 +39,4 @@ public enum TemperatureUnit implements IMeasurable {
 	public String getMeasurementType() {
 		return this.getClass().getSimpleName();
 	}
-
-	@Override
-	public IMeasurable getUnitInstance(String unitName) {
-		return null;
-	}
 }

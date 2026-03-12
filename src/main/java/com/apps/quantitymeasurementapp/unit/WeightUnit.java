@@ -1,6 +1,5 @@
 package com.apps.quantitymeasurementapp.unit;
 
-
 public enum WeightUnit implements IMeasurable {
 	KILOGRAM(1.0),
 	GRAM(0.001),
@@ -37,10 +36,5 @@ public enum WeightUnit implements IMeasurable {
 	@Override
 	public String getMeasurementType() {
 		return this.getClass().getSimpleName(); 
-	}
-
-	@Override
-	public IMeasurable getUnitInstance(String unitName) {
-		return null;
 	}
 }

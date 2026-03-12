@@ -11,8 +11,5 @@ public interface IMeasurable {
 	 
 	public double convertFromBaseUnit(double baseValue);
 
-	public String getMeasurementType();
-	
-	public IMeasurable getUnitInstance(String unitName);
-	 
+	public String getMeasurementType(); 
 }

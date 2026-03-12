@@ -1,7 +1,5 @@
 package com.apps.quantitymeasurementapp.unit;
 
-import com.apps.quantitymeasurementapp.unit.IMeasurable;
-
 public enum LengthUnit implements IMeasurable {
 	FEET(1.0),
 	INCHES(1.0 / 12.0), 
@@ -40,12 +38,4 @@ public enum LengthUnit implements IMeasurable {
 	public String getMeasurementType() {
 		return this.getClass().getSimpleName();
 	}
-
-
-	@Override
-	public IMeasurable getUnitInstance(String unitName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }
