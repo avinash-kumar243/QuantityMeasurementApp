@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.apps.quantitymeasurementapp.controller.QuantityMeasurementController;
 import com.apps.quantitymeasurementapp.entity.QuantityDTO;
 import com.apps.quantitymeasurementapp.entity.QuantityModel;
 import com.apps.quantitymeasurementapp.repository.QuantityMeasurementCacheRepository;
@@ -16,16 +17,8 @@ import com.apps.quantitymeasurementapp.unit.*;
 
 
 public class QuantityMeasurementAppTest {
-	 private QuantityMeasurementServiceImpl service;
-	    private QuantityMeasurementCacheRepository repository;
-
-	    @BeforeEach
-	    
-	    void setUp() {
-	        repository = new QuantityMeasurementCacheRepository();
-	        service = new QuantityMeasurementServiceImpl(repository);
-	    }
-
+	
+	 private QuantityMeasurementController controller = QuantityMeasurementApp.getInstance().controller; 
 	    // ----------------------------------------------------
 	    // DTO TESTS
 	    // ----------------------------------------------------
@@ -88,7 +81,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
 	        QuantityDTO q2 = new QuantityDTO(1.0, LengthUnit.FEET);
 
-	        boolean result = service.compare(q1, q2);
+	        boolean result = controller.performComparison(q1, q2);
 
 	        assertTrue(result);
 	    }
@@ -98,7 +91,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
 	        QuantityDTO q2 = new QuantityDTO(12.0, LengthUnit.INCHES);
 
-	        boolean result = service.compare(q1, q2);
+	        boolean result = controller.performComparison(q1, q2);
 
 	        assertTrue(result);
 	    }
@@ -109,7 +102,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q2 = new QuantityDTO(1.0, VolumeUnit.LITRE);
 
 	        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-	                () -> service.compare(q1, q2));
+	                () -> controller.performComparison(q1, q2));
 
 	        assertEquals("Operation not possible for two different measurement types!!!", ex.getMessage());
 	    }
@@ -123,7 +116,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO source = new QuantityDTO(1.0, LengthUnit.FEET);
 	        QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
 
-	        QuantityDTO result = service.convert(source, target);
+	        QuantityDTO result = controller.performConversion(source, target);
 
 	        assertEquals(12.0, result.getValue(), 0.01);
 	        assertEquals("INCHES", result.getUnit());
@@ -141,7 +134,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q2 = new QuantityDTO(12.0, LengthUnit.INCHES);
 	        QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
 
-	        QuantityDTO result = service.add(q1, q2, target);
+	        QuantityDTO result = controller.performAddition(q1, q2, target);
 
 	        assertEquals(24.0, result.getValue(), 0.01);
 	        assertEquals("INCHES", result.getUnit());
@@ -154,7 +147,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q2 = new QuantityDTO(1.0, WeightUnit.KILOGRAM);
 
 	        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-	                () -> service.add(q1, q2));
+	                () -> controller.performAddition(q1, q2));
 
 	        assertEquals("Operation not possible for two different measurement types!!!", ex.getMessage());
 	    }
@@ -170,7 +163,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q2 = new QuantityDTO(2000.0, WeightUnit.GRAM);
 	        QuantityDTO target = new QuantityDTO(0.0, WeightUnit.GRAM);
 
-	        QuantityDTO result = service.subtract(q1, q2, target);
+	        QuantityDTO result = controller.performSubtraction(q1, q2, target);
 
 	        assertEquals(3000.0, result.getValue(), 0.01);
 	        assertEquals("GRAM", result.getUnit());
@@ -186,7 +179,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q1 = new QuantityDTO(2.0, VolumeUnit.LITRE);
 	        QuantityDTO q2 = new QuantityDTO(1000.0, VolumeUnit.MILLILITRE);
 
-	        QuantityDTO result = service.divide(q1, q2);
+	        QuantityDTO result = controller.performDivision(q1, q2);
 
 	        assertEquals(2.0, result.getValue(), 0.01);
 	        assertEquals("LITRE", result.getUnit());
@@ -199,7 +192,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q2 = new QuantityDTO(0.0, LengthUnit.FEET);
 
 	        ArithmeticException ex = assertThrows(ArithmeticException.class,
-	                () -> service.divide(q1, q2));
+	                () -> controller.performDivision(q1, q2));
 
 	        assertEquals("Cannot divide by zero!!!", ex.getMessage());
 	    }
@@ -213,7 +206,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q = new QuantityDTO(1.0, LengthUnit.FEET);
 
 	        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-	                () -> service.add(null, q));
+	                () -> controller.performAddition(q, null));
 
 	        assertEquals("QuantityDTO objects can't be null!!!", ex.getMessage());
 	    }
@@ -222,9 +215,9 @@ public class QuantityMeasurementAppTest {
 	    void testService_ValidationConsistency() {
 	        QuantityDTO q = new QuantityDTO(1.0, LengthUnit.FEET);
 
-	        Exception ex1 = assertThrows(IllegalArgumentException.class, () -> service.add(null, q));
-	        Exception ex2 = assertThrows(IllegalArgumentException.class, () -> service.subtract(null, q));
-	        Exception ex3 = assertThrows(IllegalArgumentException.class, () -> service.divide(null, q));
+	        Exception ex1 = assertThrows(IllegalArgumentException.class, () -> controller.performAddition(q, null));
+	        Exception ex2 = assertThrows(IllegalArgumentException.class, () -> controller.performSubtraction(q, null));
+	        Exception ex3 = assertThrows(IllegalArgumentException.class, () -> controller.performDivision(q, null));
 
 	        assertEquals(ex1.getMessage(), ex2.getMessage());
 	        assertEquals(ex2.getMessage(), ex3.getMessage());
@@ -236,15 +229,15 @@ public class QuantityMeasurementAppTest {
 
 	    @Test
 	    void testService_AllMeasurementCategories_CurrentlySupported() {
-	        assertTrue(service.compare(
+	        assertTrue(controller.performComparison(
 	                new QuantityDTO(1.0, LengthUnit.FEET),
 	                new QuantityDTO(12.0, LengthUnit.INCHES)));
 
-	        assertTrue(service.compare(
+	        assertTrue(controller.performComparison(
 	                new QuantityDTO(1.0, WeightUnit.KILOGRAM),
 	                new QuantityDTO(1000.0, WeightUnit.GRAM)));
 
-	        assertTrue(service.compare(
+	        assertTrue(controller.performComparison(
 	                new QuantityDTO(1.0, VolumeUnit.LITRE),
 	                new QuantityDTO(1000.0, VolumeUnit.MILLILITRE)));
 	    }
@@ -255,7 +248,7 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO t2 = new QuantityDTO(32.0, "FAHRENHEIT", "TemperatureUnit");
 
 	        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-	                () -> service.compare(t1, t2));
+	                () -> controller.performComparison(t1, t2));
 
 	        assertEquals("Invalid measurement type or unit!!!", ex.getMessage());
 	    }
