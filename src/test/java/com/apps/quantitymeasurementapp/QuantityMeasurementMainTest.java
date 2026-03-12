@@ -972,10 +972,6 @@ public class QuantityMeasurementMainTest {
     void testVolumeUnitEnum_GallonConstant() {
         assertEquals(3.7854, VolumeUnit.GALLON.getConversionFactor());
     }
-
-    
-    
-    
     
     @Test
     void testSubtraction_SameUnit_FeetMinusFeet() {
@@ -1173,10 +1169,7 @@ public class QuantityMeasurementMainTest {
         assertEquals(10.0, a.getValue());
         assertEquals(2.0, b.getValue());
     }
-    
-    
-     
-    
+        
     @Test
     void testRefactoring_Add_DelegatesViaHelper() {
         Quantity<LengthUnit> q1 = new Quantity<>(1, LengthUnit.FEET);
@@ -1220,31 +1213,6 @@ public class QuantityMeasurementMainTest {
         assertEquals(e2.getMessage(), e3.getMessage());
     }
 
-   
-    
-//    @Test
-//    void testArithmeticOperation_Add_EnumComputation() {
-//        double result = ArithmeticOperation.ADD.compute(10, 5);
-//        assertEquals(15.0, result);
-//    }
-//
-//    @Test
-//    void testArithmeticOperation_Subtract_EnumComputation() {
-//        double result = ArithmeticOperation.SUBTRACT.compute(10, 5);
-//        assertEquals(5.0, result);
-//    }
-//
-//    @Test
-//    void testArithmeticOperation_Divide_EnumComputation() {
-//        double result = ArithmeticOperation.DIVIDE.compute(10, 5);
-//        assertEquals(2.0, result);
-//    }
-//
-//    @Test
-//    void testArithmeticOperation_DivideByZero_EnumThrows() {
-//        assertThrows(ArithmeticException.class,
-//                () -> ArithmeticOperation.DIVIDE.compute(10, 0));
-//    }
 
     @Test
     void testAdd_UC12_BehaviorPreserved() {
@@ -1359,8 +1327,5 @@ public class QuantityMeasurementMainTest {
         double result = q1.add(q2).subtract(q3).divide(q2);
 
         assertEquals(2.4, result);
-    }
-    
-    
-   
+    }   
 }

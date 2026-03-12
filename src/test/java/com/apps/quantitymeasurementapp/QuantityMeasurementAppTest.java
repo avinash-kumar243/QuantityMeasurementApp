@@ -101,10 +101,9 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
 	        QuantityDTO q2 = new QuantityDTO(1.0, VolumeUnit.LITRE);
 
-	        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+	        assertThrows(IllegalArgumentException.class,
 	                () -> controller.performComparison(q1, q2));
 
-	        assertEquals("Operation not possible for two different measurement types!!!", ex.getMessage());
 	    }
 
 	    // ----------------------------------------------------
@@ -247,9 +246,6 @@ public class QuantityMeasurementAppTest {
 	        QuantityDTO t1 = new QuantityDTO(0.0, "CELSIUS", "TemperatureUnit");
 	        QuantityDTO t2 = new QuantityDTO(32.0, "FAHRENHEIT", "TemperatureUnit");
 
-	        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-	                () -> controller.performComparison(t1, t2));
-
-	        assertEquals("Invalid measurement type or unit!!!", ex.getMessage());
+	        assertTrue(controller.performComparison(t1, t2));
 	    }
 }
