@@ -248,5 +248,67 @@ public class QuantityMeasurementDatabaseRepository implements IQuantityMeasureme
 	public static void main(String[] args) {
 		
 	}
+
+	@Override
+	public List<QuantityMeasurementEntity> getMeasurementsByOperation(String operation) {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    List<QuantityMeasurementEntity> result = new ArrayList<>();
+
+	    try {
+	        conn = connectionPool.getConnection();
+	        pstmt = conn.prepareStatement(SELECT_BY_OPERATION);
+	        pstmt.setString(1, operation);
+
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            QuantityMeasurementEntity entity = mapResultSetToEntity(rs);
+	            if (entity != null) {
+	                result.add(entity);
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        logger.severe("Error fetching measurements by operation: " + e.getMessage());
+	    } finally {
+	        closeResources(rs, pstmt, conn);
+	    }
+
+	    return result;
+	}
+
+	@Override
+	public List<QuantityMeasurementEntity> getMeasurementsByType(String measurementType) {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+
+	    List<QuantityMeasurementEntity> result = new ArrayList<>();
+
+	    try {
+	        conn = connectionPool.getConnection();
+	        pstmt = conn.prepareStatement(SELECT_BY_MEASUREMENT_TYPE);
+	        pstmt.setString(1, measurementType);
+
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            QuantityMeasurementEntity entity = mapResultSetToEntity(rs);
+	            if (entity != null) {
+	                result.add(entity);
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        logger.severe("Error fetching measurements by measurement type: " + e.getMessage());
+	    } finally {
+	        closeResources(rs, pstmt, conn);
+	    }
+
+	    return result;
+	}
 	
 }

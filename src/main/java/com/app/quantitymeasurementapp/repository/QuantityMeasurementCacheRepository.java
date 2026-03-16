@@ -32,6 +32,7 @@ class AppendableObjectOutputStream extends ObjectOutputStream {
 	}
 }
 
+
 public class QuantityMeasurementCacheRepository implements IQuantityMeasurementRepository {
 	
 	// File where data will be stored
@@ -140,10 +141,39 @@ public class QuantityMeasurementCacheRepository implements IQuantityMeasurementR
         }
     }
 
-	@Override
-	public int getTotalCount() {
-		
-		return 0;
-	}
+    @Override
+    public int getTotalCount() {
+        return quantityMeasurementEntityCache.size();
+    }
+
+    @Override
+    public List<QuantityMeasurementEntity> getMeasurementsByOperation(String operation) {
+        List<QuantityMeasurementEntity> result = new ArrayList<>();
+
+        for (QuantityMeasurementEntity entity : quantityMeasurementEntityCache) {
+            if (entity != null &&
+                entity.operation != null &&
+                entity.operation.equalsIgnoreCase(operation)) {
+                result.add(entity);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<QuantityMeasurementEntity> getMeasurementsByType(String measurementType) {
+        List<QuantityMeasurementEntity> result = new ArrayList<>();
+
+        for (QuantityMeasurementEntity entity : quantityMeasurementEntityCache) {
+            if (entity != null &&
+                entity.thisMeasurementType != null &&
+                entity.thisMeasurementType.equalsIgnoreCase(measurementType)) {
+                result.add(entity);
+            }
+        }
+
+        return result;
+    }
 
 }

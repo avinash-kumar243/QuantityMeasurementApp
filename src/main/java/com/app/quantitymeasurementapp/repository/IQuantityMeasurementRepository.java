@@ -8,4 +8,6 @@ public interface IQuantityMeasurementRepository {
 	int getTotalCount();
 	void save(QuantityMeasurementEntity entity);
 	List<QuantityMeasurementEntity> getAllMeasurements();
+	List<QuantityMeasurementEntity> getMeasurementsByOperation(String operation);
+	List<QuantityMeasurementEntity> getMeasurementsByType(String measurementType);
 }

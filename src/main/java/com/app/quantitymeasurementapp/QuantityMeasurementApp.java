@@ -13,7 +13,7 @@ public class QuantityMeasurementApp {
 	// Singleton instance
 	private static QuantityMeasurementApp instance;
 	
-	private QuantityMeasurementController controller;
+	QuantityMeasurementController controller;
 	private IQuantityMeasurementRepository repository;
 	private QuantityMeasurementServiceImpl service;
 	
