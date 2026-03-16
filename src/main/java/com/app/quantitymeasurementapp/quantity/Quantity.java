@@ -2,11 +2,7 @@ package com.app.quantitymeasurementapp.quantity;
 
 import java.util.function.DoubleBinaryOperator;
 
-import com.app.quantitymeasurementapp.entity.QuantityDTO.*;
 import com.app.quantitymeasurementapp.unit.IMeasurable;
-import com.app.quantitymeasurementapp.unit.LengthUnit;
-import com.app.quantitymeasurementapp.unit.VolumeUnit;
-import com.app.quantitymeasurementapp.unit.WeightUnit;
 
 public class Quantity<U extends IMeasurable> {
 	private final double value;
@@ -17,7 +13,7 @@ public class Quantity<U extends IMeasurable> {
 		if(unit == null) {
 			throw new IllegalArgumentException("Unit can't be null");
 		}
-		if(Double.isNaN(value)) {
+		if(Double.isNaN(value) || !Double.isFinite(value)) {
 			throw new IllegalArgumentException("Value must be finite");
 		}
 		
@@ -132,7 +128,7 @@ public class Quantity<U extends IMeasurable> {
 	    }
 
 	    if(!Double.isFinite(this.value) || !Double.isFinite(other.value)) {
-	        throw new IllegalArgumentException("Values must be finite numbers");
+	        throw new IllegalArgumentException("Values must be finite");
 	    }
 
 	    if(targetUnitRequired && targetUnit == null) {
