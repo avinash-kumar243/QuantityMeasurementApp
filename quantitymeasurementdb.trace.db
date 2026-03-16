@@ -1,0 +1,24 @@
+2026-03-14 13:34:16.325585+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUANTITY_MEASUREMENT_ENTITY" not found (this database is empty); SQL statement:
+INSERT INTO quantity_measurement_entity(this_value, this_unit, this_measurement_type, that_value, that_unit, that_measurement_type, operation, result_value, result_unit, result_measurement_type, result_string, is_error, error_message, created_at, updated_At)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) [42104-224]
+2026-03-14 13:37:27.479809+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUANTITY_MEASUREMENT_ENTITY" not found (this database is empty); SQL statement:
+INSERT INTO quantity_measurement_entity(this_value, this_unit, this_measurement_type, that_value, that_unit, that_measurement_type, operation, result_value, result_unit, result_measurement_type, result_string, is_error, error_message, created_at, updated_At)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) [42104-224]
+2026-03-14 13:40:27.731082+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUANTITY_MEASUREMENT_ENTITY" not found (this database is empty); SQL statement:
+INSERT INTO quantity_measurement_entity(this_value, this_unit, this_measurement_type, that_value, that_unit, that_measurement_type, operation, result_value, result_unit, result_measurement_type, result_string, is_error, error_message, created_at, updated_At)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) [42104-224]
+2026-03-14 13:41:48.631185+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUANTITY_MEASUREMENT_ENTITY" not found (this database is empty); SQL statement:
+INSERT INTO quantity_measurement_entity(this_value, this_unit, this_measurement_type, that_value, that_unit, that_measurement_type, operation, result_value, result_unit, result_measurement_type, result_string, is_error, error_message, created_at, updated_At)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) [42104-224]
+2026-03-14 14:03:05.965755+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUANTITY_MEASUREMENT_ENTITY" not found (this database is empty); SQL statement:
+INSERT INTO quantity_measurement_entity(this_value, this_unit, this_measurement_type, that_value, that_unit, that_measurement_type, operation, result_value, result_unit, result_measurement_type, result_string, is_error, error_message, created_at, updated_At)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) [42104-224]
+2026-03-14 14:04:56.818639+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUANTITY_MEASUREMENT_ENTITY" not found (this database is empty); SQL statement:
+INSERT INTO quantity_measurement_entity(this_value, this_unit, this_measurement_type, that_value, that_unit, that_measurement_type, operation, result_value, result_unit, result_measurement_type, result_string, is_error, error_message, created_at, updated_At)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) [42104-224]
+2026-03-14 14:05:35.517914+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUANTITY_MEASUREMENT_ENTITY" not found (this database is empty); SQL statement:
+INSERT INTO quantity_measurement_entity(this_value, this_unit, this_measurement_type, that_value, that_unit, that_measurement_type, operation, result_value, result_unit, result_measurement_type, result_string, is_error, error_message, created_at, updated_At)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) [42104-224]
+2026-03-16 08:35:36.913286+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "QUANTITY_MEASUREMENT_ENTITY" not found (this database is empty); SQL statement:
+INSERT INTO quantity_measurement_entity(this_value, this_unit, this_measurement_type, that_value, that_unit, that_measurement_type, operation, result_value, result_unit, result_measurement_type, result_string, is_error, error_message, created_at, updated_At)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) [42104-224]
