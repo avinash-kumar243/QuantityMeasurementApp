@@ -1,5 +1,7 @@
 package com.app.quantitymeasurementapp.service;
 
+import java.util.logging.Logger;
+
 import com.app.quantitymeasurementapp.entity.QuantityDTO;
 import com.app.quantitymeasurementapp.entity.QuantityMeasurementEntity;
 import com.app.quantitymeasurementapp.entity.QuantityModel;
@@ -9,162 +11,143 @@ import com.app.quantitymeasurementapp.exception.QuantityMeasurementException;
 import com.app.quantitymeasurementapp.quantity.Quantity;
 import com.app.quantitymeasurementapp.repository.IQuantityMeasurementRepository;
 import com.app.quantitymeasurementapp.unit.IMeasurable;
-import com.app.quantitymeasurementapp.unit.TemperatureUnit;
 import com.app.quantitymeasurementapp.unit.*;
 
 public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService {
 
 	private IQuantityMeasurementRepository repository;
 	
+	// Private Logger for logging information in the controller
+	private static final Logger logger = Logger.getLogger(QuantityMeasurementServiceImpl.class.getName());
+ 
 	public QuantityMeasurementServiceImpl(IQuantityMeasurementRepository repository) {
 		this.repository = repository;
+		logger.info("QuantityMeasurementServiceImpl init with repository: " + repository.getClass().getName()); 
 	}
-
+	
 	private enum Operation {
-		COMPARISON, CONVERSION, ADD_WITHOUT_TARGET, ADD_WITH_TARGET, SUBTRACT_WITHOUT_TARGET, SUBTRACT_WITH_TARGET, DIVIDE; 
+		COMPARISON, CONVERSION, ADD, SUBTRACT, DIVIDE;  
 	}
 		
 	
 	@Override
-	public boolean compare(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-	    // Step 1 : Validate QuantityDTO objects
-	    validate(thisQuantityDTO, thatQuantityDTO);
+	public boolean compare(QuantityDTO dto1, QuantityDTO dto2) {
+	    validate(dto1, dto2);
+		
+		QuantityModel<IMeasurable> model1 = convertToQuantityModel(dto1);
+		QuantityModel<IMeasurable> model2 = convertToQuantityModel(dto2);
+		
+	    Quantity<IMeasurable> q1 = new Quantity<>(model1.getValue(), model1.getUnit());
+	    Quantity<IMeasurable> q2 = new Quantity<>(model2.getValue(), model2.getUnit());
+	    
+	    boolean result = q1.equals(q2);
 
-	    // Step 2 : Convert DTOs to Quantity objects
-	    Quantity<IMeasurable> q1 = convertToQuantity(thisQuantityDTO);
-	    Quantity<IMeasurable> q2 = convertToQuantity(thatQuantityDTO);
-
-	    // Step 3 : Compare and return result
-	    return q1.equals(q2);
+	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity(dto1.getValue(), dto1.getUnit(), dto1.getMeasurementType(), dto2.getValue(), dto2.getUnit(), dto2.getMeasurementType(), Operation.COMPARISON.name(), result ? 1.0 : 0.0, "BOOLEAN", "BOOLEAN");
+	    
+	    repository.save(entity);
+	   	    	    
+	    return result;
 	}
 
 	@Override
-	public QuantityDTO convert(QuantityDTO thisQuantityDTO, QuantityDTO targetDTO) {
-	    // Step 1 : Validate QuantityDTO objects
-	    validate(thisQuantityDTO, targetDTO);
+	public QuantityDTO convert(QuantityDTO dto1, QuantityDTO targetDTO) {
+	    validate(dto1, targetDTO);
+		
+		QuantityModel<IMeasurable> model1 = convertToQuantityModel(dto1);
+		QuantityModel<IMeasurable> model2 = convertToQuantityModel(targetDTO); 
 
-	    // Step 2 : Convert DTOs to Quantity objects
-	    Quantity<IMeasurable> q1 = convertToQuantity(thisQuantityDTO);
-	    Quantity<IMeasurable> targetQuantity = convertToQuantity(targetDTO);
+	    Quantity<IMeasurable> q1 = new Quantity<>(model1.getValue(), model1.getUnit());
+	    Quantity<IMeasurable> targetQuantity = new Quantity<>(model2.getValue(), model2.getUnit());
 
-	    // Step 3 : Convert q1 into target unit
 	    Quantity<IMeasurable> result = q1.convertTo(targetQuantity.getUnit());
+	    
+	   saveOperation(dto1, targetDTO, Operation.CONVERSION, result); 
 
-	    // Step 4 : Return result as DTO
 	    return convertToDTO(result);
 	}
 
 	@Override
-	public QuantityDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		// Step 1 : Validate QuantityDTO object
-		validate(thisQuantityDTO, thatQuantityDTO);
-
-		// Step 2 : Convert to Quantity Objects
-	    Quantity<IMeasurable> q1 = convertToQuantity(thisQuantityDTO);
-	    Quantity<IMeasurable> q2 = convertToQuantity(thatQuantityDTO);
-
-		// Step 3 : Perform Add operation -> get result 
-	    Quantity<IMeasurable> result = q1.add(q2);
-
-		// Step 4 : save value and unit to repository
-	    saveOperation(thisQuantityDTO, thatQuantityDTO, Operation.ADD_WITHOUT_TARGET, result);
-
-		// Step 5 : Return QunatityDTO object to controller
-	    return convertToDTO(result); 
+	public QuantityDTO add(QuantityDTO dto1, QuantityDTO dto2) {
+		return add(dto1, dto2, dto1); 
 	}
 
 	@Override
-	public QuantityDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetDTO) {
-		// Step 1 : Validate QuantityDTO object
-		validate(thisQuantityDTO, thatQuantityDTO, targetDTO); 
-		
-		// Step 2 : Convert to Quantity Objects
-		Quantity<IMeasurable> q1 = convertToQuantity(thisQuantityDTO);
-		Quantity<IMeasurable> q2 = convertToQuantity(thatQuantityDTO);
+	public QuantityDTO add(QuantityDTO dto1, QuantityDTO dto2, QuantityDTO targetDTO) {
+		validate(dto1, dto2, targetDTO); 
 
-		// Step 3 : Perform Add operation -> get result 
+		QuantityModel<IMeasurable> model1 = convertToQuantityModel(dto1);
+		QuantityModel<IMeasurable> model2 = convertToQuantityModel(dto2);
 		QuantityModel<IMeasurable> targetModel = convertToQuantityModel(targetDTO);
-		Quantity<IMeasurable> result = q1.add(q2, targetModel.getUnit());
-		
-		// Step 4 : save value and unit to repository
-		saveOperation(thisQuantityDTO, thatQuantityDTO, Operation.ADD_WITH_TARGET, result);
-		
-		// Step 5 : Return QunatityDTO object to controller
-		 return convertToDTO(result); 
+
+	    Quantity<IMeasurable> q1 = new Quantity<>(model1.getValue(), model1.getUnit());
+	    Quantity<IMeasurable> q2 = new Quantity<>(model2.getValue(), model2.getUnit());
+	    
+	    
+	    Quantity<IMeasurable> result = q1.add(q2, targetModel.getUnit());
+	    		
+		saveOperation(dto1, dto2, Operation.ADD, result); 
+		 
+		return convertToDTO(result); 
 	} 
 
 	@Override
-	public QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-	    validate(thisQuantityDTO, thatQuantityDTO);
+	public QuantityDTO subtract(QuantityDTO dto1, QuantityDTO dto2) {
+		return subtract(dto1, dto2, dto1); 
+	}
 
-	    Quantity<IMeasurable> q1 = convertToQuantity(thisQuantityDTO);
-	    Quantity<IMeasurable> q2 = convertToQuantity(thatQuantityDTO);
+	@Override
+	public QuantityDTO subtract(QuantityDTO dto1, QuantityDTO dto2, QuantityDTO targetDTO) {
+	    validate(dto1, dto2, targetDTO);
+		
+		QuantityModel<IMeasurable> model1 = convertToQuantityModel(dto1);
+		QuantityModel<IMeasurable> model2 = convertToQuantityModel(dto2);
+		QuantityModel<IMeasurable> targetModel = convertToQuantityModel(targetDTO);
 
-	    Quantity<IMeasurable> result = q1.subtract(q2);
 
-	    saveOperation(thisQuantityDTO, thatQuantityDTO, Operation.SUBTRACT_WITHOUT_TARGET, result);
+	    Quantity<IMeasurable> q1 = new Quantity<>(model1.getValue(), model1.getUnit());
+	    Quantity<IMeasurable> q2 = new Quantity<>(model2.getValue(), model2.getUnit());
+
+	    Quantity<IMeasurable> result = q1.subtract(q2, targetModel.getUnit());
+	    
+	    saveOperation(dto1, dto2, Operation.SUBTRACT, result);
 
 	    return convertToDTO(result);
 	}
 
 	@Override
-	public QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetDTO) {
-	    validate(thisQuantityDTO, thatQuantityDTO, targetDTO);
+	public QuantityDTO divide(QuantityDTO dto1, QuantityDTO dto2) {
+	    validate(dto1, dto2);
 
-	    Quantity<IMeasurable> q1 = convertToQuantity(thisQuantityDTO);
-	    Quantity<IMeasurable> q2 = convertToQuantity(thatQuantityDTO);
-	    Quantity<IMeasurable> targetQuantity = convertToQuantity(targetDTO);
+		QuantityModel<IMeasurable> model1 = convertToQuantityModel(dto1);
+		QuantityModel<IMeasurable> model2 = convertToQuantityModel(dto2);  
 
-	    Quantity<IMeasurable> result = q1.subtract(q2, targetQuantity.getUnit());
-
-	    saveOperation(thisQuantityDTO, thatQuantityDTO, Operation.SUBTRACT_WITH_TARGET, result);
-
-	    return convertToDTO(result);
-	}
-
-	@Override
-	public QuantityDTO divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-	    validate(thisQuantityDTO, thatQuantityDTO);
-
-	    Quantity<IMeasurable> q1 = convertToQuantity(thisQuantityDTO);
-	    Quantity<IMeasurable> q2 = convertToQuantity(thatQuantityDTO);
-
+	    Quantity<IMeasurable> q1 = new Quantity<>(model1.getValue(), model1.getUnit());
+	    Quantity<IMeasurable> q2 = new Quantity<>(model2.getValue(), model2.getUnit());
+		
 	    double result = q1.divide(q2);
 	    
-	    
-
-	    return new QuantityDTO(result, q1.getUnit());
+	    return new QuantityDTO(result, q1.getUnit()); 
 	}
 
 	
 	// Helper method for addition
-	private void validate(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		if(thisQuantityDTO == null || thatQuantityDTO == null) {
-			throw new QuantityMeasurementException("QuantityDTO objects can't be null!!!");
-		}
-		
-		if(!thisQuantityDTO.getMeasurementType().equals(thatQuantityDTO.getMeasurementType())) {
-			throw new CategoryMismatchException("Operation not possible for two different measurement types!!!");
-		}
-		
-		if(!Double.isFinite(thisQuantityDTO.getValue()) || !Double.isFinite(thatQuantityDTO.getValue())) {
-			throw new QuantityMeasurementException("Values can't be null!!!");
-		}
+	private void validate(QuantityDTO dto1, QuantityDTO dto2) {
+		validate(dto1, dto2, dto1); 
 	}
 	
-	private void validate(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetDTO) {
-		if(thisQuantityDTO == null || thatQuantityDTO == null || targetDTO == null) {
+	private void validate(QuantityDTO dto1, QuantityDTO dto2, QuantityDTO targetDTO) {
+		if(dto1 == null || dto2 == null || targetDTO == null) {
 			throw new QuantityMeasurementException("QuantityDTO objects can't be null!!!");
 		}
 		
-		if((!thisQuantityDTO.getMeasurementType().equals(thatQuantityDTO.getMeasurementType())) || (!thisQuantityDTO.getMeasurementType().equals(targetDTO.getMeasurementType()))) {
-			throw new CategoryMismatchException("Operation not possible n two different measurement types!!!");
+		if((!dto1.getMeasurementType().equals(dto2.getMeasurementType())) || (!dto1.getMeasurementType().equals(targetDTO.getMeasurementType()))) {
+			throw new CategoryMismatchException("Operation not possible on two different measurement types!!!");
 		}
 		
-		if(!Double.isFinite(thisQuantityDTO.getValue()) || !Double.isFinite(thatQuantityDTO.getValue()) || !Double.isFinite(targetDTO.getValue())) {
-			throw new QuantityMeasurementException("Values can't be null!!!"); 
+		if(!Double.isFinite(dto1.getValue()) || !Double.isFinite(dto2.getValue()) || !Double.isFinite(targetDTO.getValue())) {
+			throw new QuantityMeasurementException("Values must be finite numbers!!!"); 
 		}
-	}
+	} 
 	
 	// Helper method to convert QuantityDTO object to QuantityModel object
 	public QuantityModel<IMeasurable> convertToQuantityModel(QuantityDTO dto) {
@@ -200,20 +183,17 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 		return new QuantityModel<IMeasurable>(dto.getValue(), unit); 
 	}
 	
-	private Quantity<IMeasurable> convertToQuantity(QuantityDTO dto) {
-	    QuantityModel<IMeasurable> model = convertToQuantityModel(dto);
-	    return new Quantity<>(model.getValue(), model.getUnit());
-	}
-	
 	private void saveOperation(QuantityDTO dto1, QuantityDTO dto2, Operation arithmetic, Quantity<IMeasurable> result) {
 	    QuantityModel<IMeasurable> resultModel = new QuantityModel<>(result.getValue(), result.getUnit());
 
 	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity(
-	            convertToQuantityModel(dto1),
-	            convertToQuantityModel(dto2),
-	            arithmetic.name(),
-	            resultModel
-	    );
+            dto1.getValue(), dto1.getUnit(), dto1.getMeasurementType(),
+            dto2.getValue(), dto2.getUnit(), dto2.getMeasurementType(),
+            arithmetic.name(),
+            resultModel.getValue(),
+            resultModel.getUnit().getUnitName(),
+            resultModel.getUnit().getMeasurementType()
+	    ); 
 
 	    repository.save(entity);
 	}
