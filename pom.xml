@@ -13,6 +13,37 @@
           <version>5.10.2</version>
           <scope>test</scope>
       </dependency>
+      
+      <dependency> <!-- H2 In-Memory/Embedded Database (for testing) -->
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>2.2.224</version>
+    </dependency>
+
+        <dependency> <!-- HikariCP Connection Pool -->
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+        </dependency>     
+               
+        <dependency> <!-- Mockito for Mocking -->
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency> <!-- SLF4J for Logging -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.11</version>
+        </dependency>
 
   </dependencies>
   
