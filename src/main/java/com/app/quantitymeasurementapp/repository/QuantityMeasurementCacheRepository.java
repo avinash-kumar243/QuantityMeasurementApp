@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.logging.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,12 +45,15 @@ public class QuantityMeasurementCacheRepository implements IQuantityMeasurementR
     // Singleton instance
     private static QuantityMeasurementCacheRepository instance;
 
+    private static final Logger logger = Logger.getLogger(QuantityMeasurementCacheRepository.class.getName());
  
     public QuantityMeasurementCacheRepository() {
         quantityMeasurementEntityCache = new ArrayList<>();
 
         // Load existing data from disk
         loadFromDisk();
+        
+        logger.info("QuantityMeasurementCacheRepository initialized with " + quantityMeasurementEntityCache.size() + " entities loaded from disk");
     }
 
     // Get single instance of repository
@@ -128,10 +132,6 @@ public class QuantityMeasurementCacheRepository implements IQuantityMeasurementR
             ois.close();
             fis.close();
 
-//            System.out.println("Loaded " +
-//                    quantityMeasurementEntityCache.size() +
-//                    " quantity measurement entities from storage");
-
         } catch (IOException | ClassNotFoundException ex) {
             System.err.println(
                     "Error loading quantity measurement entities: " +
@@ -139,5 +139,11 @@ public class QuantityMeasurementCacheRepository implements IQuantityMeasurementR
             );
         }
     }
+
+	@Override
+	public int getTotalCount() {
+		
+		return 0;
+	}
 
 }
