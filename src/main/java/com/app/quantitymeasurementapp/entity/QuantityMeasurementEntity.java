@@ -1,4 +1,4 @@
-package com.app.quantitymeasurementapp.model;
+package com.app.quantitymeasurementapp.entity;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +13,9 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "quantity_measurement_entity", indexes = {
@@ -23,6 +25,8 @@ import lombok.NoArgsConstructor;
 })
 
 @Data
+//@Setter
+//@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuantityMeasurementEntity { 

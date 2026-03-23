@@ -1,4 +1,4 @@
-package com.app.quantitymeasurementapp.dto;
+package com.app.quantitymeasurementapp.entity;
 
 import java.io.Serializable;
 
