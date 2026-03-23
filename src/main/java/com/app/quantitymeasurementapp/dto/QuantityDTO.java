@@ -32,7 +32,7 @@ public class QuantityDTO {
 		@Override
 		public String getUnitName() {
 			return this.name(); 
-		}
+		} 
 		
 		@Override
 		public String getMeasurementType() {
