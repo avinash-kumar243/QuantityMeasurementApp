@@ -1,6 +1,5 @@
 package com.app.quantitymeasurementapp.service;
 
-import java.rmi.server.Operation;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
@@ -8,12 +7,12 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.quantitymeasurementapp.dto.QuantityDTO;
 import com.app.quantitymeasurementapp.dto.QuantityMeasurementDTO;
-import com.app.quantitymeasurementapp.dto.QuantityModel;
 import com.app.quantitymeasurementapp.exception.CategoryMismatchException;
 import com.app.quantitymeasurementapp.exception.QuantityMeasurementException;
-import com.app.quantitymeasurementapp.model.QuantityDTO;
-import com.app.quantitymeasurementapp.model.QuantityMeasurementEntity;
+import com.app.quantitymeasurementapp.entity.QuantityMeasurementEntity;
+import com.app.quantitymeasurementapp.entity.QuantityModel;
 import com.app.quantitymeasurementapp.quantity.Quantity;
 import com.app.quantitymeasurementapp.repository.QuantityMeasurementRepository;
 import com.app.quantitymeasurementapp.unit.IMeasurable;
