@@ -1,3 +1,5 @@
+
+
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
@@ -5,6 +7,7 @@ target/
 !**/src/test/**/target/
 
 ### STS ###
+.metadata/
 .apt_generated
 .classpath
 .factorypath
