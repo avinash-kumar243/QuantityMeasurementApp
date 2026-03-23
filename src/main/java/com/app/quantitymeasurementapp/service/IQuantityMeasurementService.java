@@ -2,8 +2,8 @@ package com.app.quantitymeasurementapp.service;
 
 import java.util.List;
 
+import com.app.quantitymeasurementapp.dto.QuantityDTO;
 import com.app.quantitymeasurementapp.dto.QuantityMeasurementDTO;
-import com.app.quantitymeasurementapp.model.QuantityDTO;
 
 public interface IQuantityMeasurementService {
 	

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.quantitymeasurementapp.dto.QuantityInputDTO;
 import com.app.quantitymeasurementapp.dto.QuantityMeasurementDTO;
-import com.app.quantitymeasurementapp.model.QuantityInputDTO;
 import com.app.quantitymeasurementapp.service.IQuantityMeasurementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
