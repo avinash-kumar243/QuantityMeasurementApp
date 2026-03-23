@@ -29,7 +29,7 @@ public class QuantityMeasurementController {
 	// Private Logger for logging information in the controller
 	private static final Logger logger = Logger.getLogger(QuantityMeasurementController.class.getName());
 
-	
+	 
 	@Autowired
 	private IQuantityMeasurementService service;
 	
