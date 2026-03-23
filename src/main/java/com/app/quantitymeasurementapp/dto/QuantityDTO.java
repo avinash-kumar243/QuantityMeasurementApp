@@ -1,4 +1,4 @@
-package com.app.quantitymeasurementapp.model;
+package com.app.quantitymeasurementapp.dto;
 
 import java.util.logging.Logger;
 
