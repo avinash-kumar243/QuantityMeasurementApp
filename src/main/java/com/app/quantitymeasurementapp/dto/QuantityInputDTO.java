@@ -24,7 +24,7 @@ public class QuantityInputDTO {
 	@NotNull(message = "Second Quantity DTO can not be null")
 	public QuantityDTO thatQuantityDTO;
 
-	@Valid
+	@Valid 
 	public QuantityDTO targetQuantityDTO;
 
 }
