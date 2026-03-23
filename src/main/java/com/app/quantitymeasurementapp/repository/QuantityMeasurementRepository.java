@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.app.quantitymeasurementapp.model.QuantityMeasurementEntity;
+import com.app.quantitymeasurementapp.entity.QuantityMeasurementEntity;
 
 @Repository
 public interface QuantityMeasurementRepository extends JpaRepository<QuantityMeasurementEntity, Long>{
