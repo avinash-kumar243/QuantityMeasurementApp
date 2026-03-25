@@ -312,3 +312,248 @@ Conversion requires formula-based transformation:
 - [feature/UC14-TemperatureMeasurementwithSelectiveArithmetic](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src)
 
 ---
+
+# 🏗 UC15 – N-Tier Architecture Refactoring
+📅 **10 March 2026**  
+🔖 **Branch:** `feature/UC15-N-Tier`
+
+## 🎯 Objective
+Refactor the application into a **clean N-Tier Architecture** to improve:
+
+- Maintainability
+- Scalability
+- Testability
+- Separation of concerns
+
+---
+
+## 🏗 System Architecture
+
+```
+Presentation Layer
+       │
+       ▼
+Controller Layer
+       │
+       ▼
+Service Layer
+       │
+       ▼
+Repository Layer
+       │
+       ▼
+Database / Persistence
+```
+
+---
+
+## 📦 Project Layer Structure
+
+| Layer | Responsibility |
+|------|----------------|
+| **Controller** | Handles API requests and responses |
+| **Service** | Business logic and validation |
+| **DTO** | Data transfer between layers |
+| **Entity / Model** | Core domain representation |
+| **Repository** | Data persistence abstraction |
+
+---
+
+## 🧠 Concepts Implemented
+
+- N-Tier Architecture Principles
+- Data Transfer Objects (DTO)
+- Service Oriented Design
+- Dependency Injection Pattern
+- Error Handling as Data
+- Immutable Data Objects
+- Layered System Design
+
+---
+
+## ⚙ SOLID Principles Applied
+
+| Principle | Application |
+|----------|-------------|
+| **SRP** | Each layer has a single responsibility |
+| **OCP** | Easily extendable measurement units |
+| **LSP** | Unit implementations interchangeable |
+| **ISP** | Small measurable interfaces |
+| **DIP** | High level modules depend on abstractions |
+
+---
+
+## ✅ Implementation Highlights
+
+- Introduced **DTO layer for API communication**
+- Implemented **Service layer for business logic**
+- Created **Repository abstraction**
+- Applied **Dependency Injection**
+- Improved **testability and modularity**
+
+🔗 Repository  
+- [feature/UC15-N-Tier](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC15-N-Tier/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+# 🗄 UC16 – JDBC Database Integration
+📅 **14 March 2026**  
+🔖 **Branch:** `feature/UC16-JDBCPersistence`
+
+## 🎯 Objective
+Enable **persistent storage of measurement data** using **JDBC and relational database design**.
+
+---
+
+## 🧠 Technologies Used
+
+- Java JDBC
+- Maven Dependency Management
+- SQL Database
+- Connection Pooling
+- Prepared Statements
+
+---
+
+## ⚙ Core Concepts Applied
+
+- JDBC Connection Handling
+- Connection Pooling
+- Parameterized SQL Queries
+- Resource Management
+- Transaction Handling
+- Exception Hierarchy
+- Configuration Management
+
+---
+
+## ✅ Implementation
+
+- Integrated **JDBC persistence layer**
+- Implemented **Connection Pool**
+- Used **Prepared Statements for security**
+- Created **Repository layer for database operations**
+- Applied **SQL best practices**
+
+🔗 Repository  
+- [feature/UC16-JDBCPersistence](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC16-JDBCPersistence/src/main/java/com/app/quantitymeasurementapp)
+
+---
+
+# 🌱 UC17 – Spring Boot Backend
+📅 **17 Mar 2026**  
+🔖 **Branch:** `feature/UC17-SpringBackend`
+
+## 🎯 Objective
+Develop a **Spring Boot backend API** for quantity measurement services.
+
+---
+
+## 🧠 Spring Concepts Used
+
+- Spring Framework
+- Spring Boot
+- Spring MVC
+- REST API Development
+- Dependency Injection
+- Spring Service Layer
+- Logging Framework
+- Spring Data JPA
+
+---
+
+## 🏗 Backend Architecture
+
+```
+Client Request
+      │
+      ▼
+REST Controller
+      │
+      ▼
+Service Layer
+      │
+      ▼
+Repository Layer
+      │
+      ▼
+Database
+```
+
+---
+
+## 📦 Core Components
+
+| Component | Role |
+|----------|------|
+| Controller | REST API endpoints |
+| Service | Business logic |
+| Repository | Data persistence |
+| Entity | JPA domain objects |
+
+---
+
+## ✅ Implementation
+
+- Created **Spring Boot application**
+- Developed **RESTful APIs**
+- Implemented **Service and Repository layers**
+- Integrated **Spring Data JPA**
+- Added **structured logging**
+
+🔗 Repository  
+- [feature/UC17-SpringBackend](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC17-SpringBackend/src/main/java/com/app/quantitymeasurementapp)
+
+---
+
+# 🔐 UC18 – Google Authentication & User Management
+📅 **22 Mar 2026**  
+🔖 **Branch:** `feature/UC18-GoogleAuthUserManagement`
+
+## 🎯 Objective
+Secure the application using **Google OAuth2 authentication and JWT authorization**.
+
+---
+
+## 🔑 Security Technologies
+
+- Spring Security
+- OAuth2 Authentication
+- Google Sign-In
+- JWT (JSON Web Token)
+- Secure Session Handling
+
+---
+
+## 🔐 Authentication Flow
+
+```
+User Login
+   │
+   ▼
+Google OAuth Authentication
+   │
+   ▼
+Backend Validation
+   │
+   ▼
+JWT Token Generated
+   │
+   ▼
+Secure API Access
+```
+
+---
+
+## ✅ Implementation
+
+- Configured **Spring Security**
+- Integrated **Google OAuth2 login**
+- Implemented **JWT token generation**
+- Added **secure API authorization**
+- Created **user role management**
+
+🔗 Repository  
+- [feature/UC18-GoogleAuthUserManagement](https://github.com/avinash-kumar243/QuantityMeasurementApp/tree/feature/UC18-GoogleAuthUserManagement/src/main/java/com/app/quantitymeasurementapp)
+
+---
