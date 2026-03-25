@@ -14,78 +14,78 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<ErrorResponse> handleRunTimeException(RuntimeException e, HttpServletRequest request){
-		ErrorResponse errro = new ErrorResponse();
-		errro.setDateTime(LocalDateTime.now());
-		errro.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-		errro.setError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
-		errro.setMessage(e.getMessage());
-		errro.setPath(request.getRequestURL().toString());
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errro);
+		ErrorResponse Error = new ErrorResponse();
+		Error.setDateTime(LocalDateTime.now()); 
+		Error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		Error.setError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+		Error.setMessage(e.getMessage());
+		Error.setPath(request.getRequestURL().toString());
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Error);
 	}
 	
 	@ExceptionHandler(CategoryMismatchException.class)
 	public ResponseEntity<ErrorResponse> handleCategoryMismatchException(CategoryMismatchException e, HttpServletRequest request){
-		ErrorResponse errro = new ErrorResponse();
-		errro.setDateTime(LocalDateTime.now());
-		errro.setStatus(HttpStatus.BAD_REQUEST.value());
-		errro.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
-		errro.setMessage(e.getMessage());
-		errro.setPath(request.getRequestURL().toString());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errro);
+		ErrorResponse Error = new ErrorResponse();
+		Error.setDateTime(LocalDateTime.now());
+		Error.setStatus(HttpStatus.BAD_REQUEST.value());
+		Error.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
+		Error.setMessage(e.getMessage());
+		Error.setPath(request.getRequestURL().toString());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Error);
 	}	
 	
 	@ExceptionHandler(InvalidUnitException.class)
 	public ResponseEntity<ErrorResponse> handleInvalidUnitException(InvalidUnitException e, HttpServletRequest request){
-		ErrorResponse errro = new ErrorResponse();
-		errro.setDateTime(LocalDateTime.now());
-		errro.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-		errro.setError(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
-		errro.setMessage(e.getMessage());
-		errro.setPath(request.getRequestURL().toString());
-		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errro);
+		ErrorResponse Error = new ErrorResponse();
+		Error.setDateTime(LocalDateTime.now());
+		Error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+		Error.setError(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
+		Error.setMessage(e.getMessage());
+		Error.setPath(request.getRequestURL().toString());
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(Error);
 	}
 	
 	@ExceptionHandler(InvalidUnitMeasurementException.class)
 	public ResponseEntity<ErrorResponse> handleInvalidUnitMeasurementException(InvalidUnitMeasurementException e, HttpServletRequest request){
-		ErrorResponse errro = new ErrorResponse();
-		errro.setDateTime(LocalDateTime.now());
-		errro.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-		errro.setError(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
-		errro.setMessage(e.getMessage());
-		errro.setPath(request.getRequestURL().toString());
-		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errro);
+		ErrorResponse Error = new ErrorResponse();
+		Error.setDateTime(LocalDateTime.now());
+		Error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+		Error.setError(HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
+		Error.setMessage(e.getMessage());
+		Error.setPath(request.getRequestURL().toString());
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(Error);
 	}
 	
 	@ExceptionHandler(QuantityMeasurementException.class)
 	public ResponseEntity<ErrorResponse> handleQuantityMeasurementException(QuantityMeasurementException e, HttpServletRequest request){
-		ErrorResponse errro = new ErrorResponse();
-		errro.setDateTime(LocalDateTime.now());
-		errro.setStatus(HttpStatus.BAD_REQUEST.value());
-		errro.setError("Quantity Measurement Error");
-		errro.setMessage(e.getMessage());
-		errro.setPath(request.getRequestURL().toString());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errro);
+		ErrorResponse Error = new ErrorResponse();
+		Error.setDateTime(LocalDateTime.now());
+		Error.setStatus(HttpStatus.BAD_REQUEST.value());
+		Error.setError("Quantity Measurement Error");
+		Error.setMessage(e.getMessage());
+		Error.setPath(request.getRequestURL().toString());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Error);
 	}
 	
 	@ExceptionHandler(UnsupportedOperationException.class)
 	public ResponseEntity<ErrorResponse> handleUnsupportedOperationException(UnsupportedOperationException e, HttpServletRequest request){
-		ErrorResponse errro = new ErrorResponse();
-		errro.setDateTime(LocalDateTime.now());
-		errro.setStatus(HttpStatus.BAD_REQUEST.value());
-		errro.setError("This operation not supported yet!");
-		errro.setMessage(e.getMessage());
-		errro.setPath(request.getRequestURL().toString());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errro);
+		ErrorResponse Error = new ErrorResponse();
+		Error.setDateTime(LocalDateTime.now());
+		Error.setStatus(HttpStatus.BAD_REQUEST.value());
+		Error.setError("This operation not supported yet!");
+		Error.setMessage(e.getMessage());
+		Error.setPath(request.getRequestURL().toString());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Error);
 	}
-	
+		
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorResponse> handle(Exception e, HttpServletRequest request){
-		ErrorResponse errro = new ErrorResponse();
-		errro.setDateTime(LocalDateTime.now());
-		errro.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-		errro.setError("Internal Server error!");
-		errro.setMessage(e.getMessage());
-		errro.setPath(request.getRequestURL().toString());
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errro);
+		ErrorResponse Error = new ErrorResponse();
+		Error.setDateTime(LocalDateTime.now());
+		Error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		Error.setError("Internal Server error!");
+		Error.setMessage(e.getMessage());
+		Error.setPath(request.getRequestURL().toString());
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Error);
 	}
 }
