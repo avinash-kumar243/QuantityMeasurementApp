@@ -1,3 +1,2 @@
 # QuantityMeasurementApp
-This is about QuantityMeasurementApp
-dev
+feature/UC21-MicroservicesArchitecture branch
