@@ -101,11 +101,11 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 		
 		// ---------- Instead of printing details, we can redirect request to redirected url 
 		
-		System.out.println("OAuth2 login successful");
-		System.out.println("Email: " + email);
-		System.out.println("Name: " + name);
-		System.out.println("Provider ID: " + providerId);
-		System.out.println("JWT Token: " + token);
+//		System.out.println("OAuth2 login successful");
+//		System.out.println("Email: " + email);
+//		System.out.println("Name: " + name);
+//		System.out.println("Provider ID: " + providerId);
+//		System.out.println("JWT Token: " + token);
 
 		response.setContentType("text/plain");
 		response.getWriter().write("OAuth2 Login Successful\n");
