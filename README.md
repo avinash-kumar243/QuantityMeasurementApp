@@ -35,7 +35,11 @@ main
       ├── feature/UC11-VolumeMeasurement
       ├── feature/UC12-SubtractionAndDivision
       ├── feature/UC13-CentralizedArithmeticLogic
-      └── feature/UC14-TemperatureMeasurementwithSelectiveArithmetic
+      ├── feature/UC14-TemperatureMeasurementwithSelectiveArithmetic
+      ├── feature/UC15-N-Tier
+      ├── feature/UC16-JDBCPersistence
+      ├── feature/UC17-SpringBackend
+      └── feature/UC18-GoogleAuthUserManagement
 ```
 
 ---
