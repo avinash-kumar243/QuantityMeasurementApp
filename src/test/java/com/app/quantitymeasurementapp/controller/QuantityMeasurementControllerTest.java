@@ -15,11 +15,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.app.quantitymeasurementapp.config.JWTFilter;
 import com.app.quantitymeasurementapp.dto.QuantityDTO;
 import com.app.quantitymeasurementapp.dto.QuantityInputDTO;
 import com.app.quantitymeasurementapp.dto.QuantityMeasurementDTO;
 import com.app.quantitymeasurementapp.service.IQuantityMeasurementService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @WebMvcTest(QuantityMeasurementController.class) 
 @Import(JacksonAutoConfiguration.class)
@@ -29,11 +31,13 @@ public class QuantityMeasurementControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private ObjectMapper objectMapper;
-	
 	@MockitoBean
 	private IQuantityMeasurementService service;
 	
+	@MockitoBean
+	private JWTFilter jwtFilter;
+	
+	private ObjectMapper objectMapper;
 	private QuantityInputDTO inputDto;
 	private QuantityMeasurementDTO result;
 	
