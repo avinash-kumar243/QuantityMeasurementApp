@@ -14,12 +14,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import lombok.AllArgsConstructor;
+import com.app.quantitymeasurementapp.service.OAuth2AuthenticationSuccessHandler;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {  
 	
 //	This class is the main Spring Security setup class.
@@ -34,8 +36,10 @@ public class SecurityConfig {
 //		session should be stateless
 	
 	
-	private JWTFilter filter;
-	private AuthenticationEntryPoint point; 
+	private final JWTFilter filter;
+	private final AuthenticationEntryPoint point; 
+	private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+	
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,13 +47,16 @@ public class SecurityConfig {
 		 	.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(authz -> authz
 					.requestMatchers("/auth/**").permitAll()
+					.requestMatchers("/oauth2/**", "/login/**").permitAll()
 					.requestMatchers("/h2-console/**").permitAll()
 	                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-					.anyRequest().authenticated())
-					.sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+					.anyRequest().authenticated()
+			)
+			.oauth2Login(oauth -> oauth.successHandler(oAuth2AuthenticationSuccessHandler))
+			.sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.exceptionHandling(ex -> ex.authenticationEntryPoint(point));
 			
-		
+		 
 			http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 			http.headers(headers-> headers.frameOptions(frame-> frame.disable()));
 		
