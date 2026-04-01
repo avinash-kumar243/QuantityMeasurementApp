@@ -17,16 +17,12 @@ public enum WeightUnit implements IMeasurable {
 	}
 			
 	public double convertToBaseUnit(double value) {
-		return round(value * this.conversionFactor);
+		return value * this.conversionFactor;
 	}
 	
 	public double convertFromBaseUnit(double baseValue) {
-		return round(baseValue / this.conversionFactor); 
-	}
-	
-	private double round(double value) {
-		return Math.round(value * 100.0) / 100.0; 
-	}
+		return baseValue / this.conversionFactor; 
+	} 
 
 	@Override
 	public String getUnitName() {

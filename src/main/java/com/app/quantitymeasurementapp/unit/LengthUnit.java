@@ -18,16 +18,13 @@ public enum LengthUnit implements IMeasurable {
 	} 
 	
 	public double convertToBaseUnit(double value) {
-		return round(value * conversionFactor); 
+		return value * conversionFactor; 
 	}
 	
 	public double convertFromBaseUnit(double baseValue) {
-		return round(baseValue / conversionFactor); 
+		return baseValue / conversionFactor; 
 	}
-	
-	private double round(double value) {
-		return Math.round(value * 1000.0) / 1000.0; 
-	}
+
 	
 	@Override
 	public String getUnitName() {
