@@ -1,8 +1,5 @@
 package com.app.quantitymeasurementapp.dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -14,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SignupRequestDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Long id;
 	
 	@NotBlank
 	private String username;
@@ -28,6 +25,5 @@ public class SignupRequestDTO {
 	@Email
 	private String email;
 	
-	@NotBlank
-	private String role;	
+	// for every new user, role will be assign to "USER" in backend	service.
 }

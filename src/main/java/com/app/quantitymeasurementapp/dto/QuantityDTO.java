@@ -41,7 +41,7 @@ public class QuantityDTO {
 	} 
 	
 	public enum WeightUnit implements IMeasurableUnit {
-		KILOGRAM, GRAM, POUND;
+		KILOGRAM, GRAM, POUND, MILLIGRAM;
 		
 		@Override
 		public String getUnitName() {
@@ -55,7 +55,7 @@ public class QuantityDTO {
 	}
 	
 	public enum VolumeUnit implements IMeasurableUnit {
-		MILILITRE, LITRE, GALLON;
+		MILLILITRE, LITRE, GALLON;
 		
 		@Override
 		public String getUnitName() {
@@ -69,7 +69,7 @@ public class QuantityDTO {
 	}
 	
 	public enum TemperatureUnit implements IMeasurableUnit {
-		CELSIUS, FAHRENHEIT;
+		CELSIUS, FAHRENHEIT, KELVIN;
 		
 		@Override
 		public String getUnitName() {
@@ -89,7 +89,7 @@ public class QuantityDTO {
 	
 	@NotNull(message = "Unit cannot be null")
 	@Schema(example = "FEET", allowableValues = {
-			"FEET", "INCHES", "YARDS", "CENTIMETERS", "LITRE", "MILLILITER", "GALLON", "MILLIGRAM", "GRAM", "KILOGRAM", "POUND", "TOMME", "CELSIUS", "FAHRENHEIT"
+			"FEET", "INCHES", "YARDS", "CENTIMETERS", "LITRE", "MILLILITER", "GALLON", "MILLIGRAM", "GRAM", "KILOGRAM", "POUND", "CELSIUS", "FAHRENHEIT, KELVIN"
 	})
 	public String unit;
 	
