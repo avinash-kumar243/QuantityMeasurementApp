@@ -49,7 +49,7 @@ public class AuthService {
         entitydb.setEmail(dto.getEmail()); 
         entitydb.setPassword(passwordEncoder.encode(dto.getPassword()));
         entitydb.setUsername(dto.getUsername());
-        entitydb.setRole(dto.getRole());
+        entitydb.setRole("USER");
         
         authRepository.save(entitydb); 
         
