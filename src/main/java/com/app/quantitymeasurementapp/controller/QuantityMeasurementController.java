@@ -225,4 +225,10 @@ public class QuantityMeasurementController {
 		return ResponseEntity.ok(service.getErrorHistory());  
 	}
 	
+	
+	@GetMapping("/history")
+	@Operation(summary = "Get complete measurement history")
+	public ResponseEntity<List<QuantityMeasurementDTO>> getAllHistory() {
+	    return ResponseEntity.ok(service.getAllHistory());
+	}
 }
