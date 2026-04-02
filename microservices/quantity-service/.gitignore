@@ -1,0 +1,56 @@
+####################################
+# Build & Compiled Files (Heavy/Generated)
+####################################
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+####################################
+# IDE Specifics (User-specific)
+####################################
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse / STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# VS Code
+.vscode/
+
+####################################
+# Maven Wrapper Binaries
+####################################
+# We keep the script, but ignore the jar binary if it's there
+.mvn/wrapper/maven-wrapper.jar
+
+####################################
+# Environment & Secrets (CRITICAL)
+####################################
+# Never push secrets, keys, or local DB credentials
+.env
+.env.*
+application-local.properties
+application-dev.properties
+# If you use specific secrets files:
+secrets.xml
+*.jks
+
+####################################
+# Logs & OS
+####################################
+logs/
+*.log
+.DS_Store
+Thumbs.db
