@@ -27,6 +27,19 @@ public class JWTFilter extends OncePerRequestFilter {  // JWTFilter = It ask JWT
 		this.customUserDetailsService = customUserDetailsService;
 		this.jwtService = jwtService;
 	}
+	
+	
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+	    String path = request.getServletPath();
+
+	    return path.startsWith("/auth/")
+	            || path.startsWith("/oauth2/")
+	            || path.startsWith("/login/")
+	            || path.startsWith("/h2-console/")
+	            || path.startsWith("/swagger-ui/")
+	            || path.startsWith("/v3/api-docs");
+	}
 
 
 	@Override

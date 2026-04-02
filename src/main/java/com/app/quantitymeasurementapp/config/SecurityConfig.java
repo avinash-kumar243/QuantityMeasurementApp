@@ -52,7 +52,10 @@ public class SecurityConfig {
 	                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 					.anyRequest().authenticated()
 			)
-			.oauth2Login(oauth -> oauth.successHandler(oAuth2AuthenticationSuccessHandler))
+			.oauth2Login(oauth -> oauth
+			        .successHandler(oAuth2AuthenticationSuccessHandler)
+			        .failureUrl("http://localhost:4200/auth?oauth2=failed")
+			)
 			.sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.exceptionHandling(ex -> ex.authenticationEntryPoint(point));
 			

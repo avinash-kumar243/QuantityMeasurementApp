@@ -147,6 +147,12 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         return new QuantityMeasurementDTO().fromEntityList(entities);
 	}
 	
+	@Override
+	public List<QuantityMeasurementDTO> getAllHistory() {
+	    List<QuantityMeasurementEntity> entities = repository.findAllByOrderByCreatedAtDesc();
+	    return new QuantityMeasurementDTO().fromEntityList(entities);
+	}
+	
 	
 	private QuantityMeasurementDTO executeArithmeticOperation(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO resultQuantityDTO, String operation, ArithmeticOperation arithmeticOperation) {
 		
