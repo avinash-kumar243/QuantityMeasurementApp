@@ -93,24 +93,8 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
 		String token = jwtService.generateToken(email);
 
-		// Redirect frontend with JWT
-//		String redirectUrl = "http://localhost:3000/oauth2/success?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8);
-//
-//		response.sendRedirect(redirectUrl);
-		
-		
-		// ---------- Instead of printing details, we can redirect request to redirected url 
-		
-//		System.out.println("OAuth2 login successful");
-//		System.out.println("Email: " + email);
-//		System.out.println("Name: " + name);
-//		System.out.println("Provider ID: " + providerId);
-//		System.out.println("JWT Token: " + token);
+		String redirectUrl = "http://localhost:4200/auth?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8) + "&oauth2=success";
 
-		response.setContentType("text/plain");
-		response.getWriter().write("OAuth2 Login Successful\n");
-		response.getWriter().write("Email: " + email + "\n");
-		response.getWriter().write("Name: " + name + "\n");
-		response.getWriter().write("JWT Token: " + token);
+		response.sendRedirect(redirectUrl);
 	}
 }
