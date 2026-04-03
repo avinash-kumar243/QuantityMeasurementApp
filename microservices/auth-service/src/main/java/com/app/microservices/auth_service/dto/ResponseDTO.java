@@ -1,0 +1,18 @@
+package com.app.microservices.auth_service.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ResponseDTO {
+	
+	@NotBlank
+	private String token;
+	
+	@NotBlank
+	private String message;
+}
