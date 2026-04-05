@@ -30,7 +30,7 @@ public class AuthController {
 		
 		ResponseDTO user = authService.loginUser(request);
 		
-		return ResponseEntity.ok().body(new ResponseDTO(user.getToken(), "login sucess")); 
+		return ResponseEntity.ok(new ResponseDTO(user.getToken(), "login sucess")); 
 	}
 	
 	
@@ -39,6 +39,6 @@ public class AuthController {
 		
 		ResponseDTO user = authService.registerUser(request);
 		
-		return ResponseEntity.ok().body(user); 
+		return ResponseEntity.ok(user); 
 	} 
 }
