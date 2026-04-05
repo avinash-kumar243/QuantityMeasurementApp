@@ -15,4 +15,4 @@ public class ResponseDTO {
 	
 	@NotBlank
 	private String message;
-}
+}	
