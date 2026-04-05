@@ -1,5 +1,6 @@
 server:
   port: 8081
+  forward-headers-strategy: framework
 
 
 jwt:
@@ -42,7 +43,20 @@ spring:
             scope:
               - email
               - profile
+            redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME} 
+    password: ${MAIL_APP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true  
+            
 # Service Discovery (Eureka)
 eureka:
   client:
