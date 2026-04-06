@@ -93,7 +93,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
 		String token = jwtService.generateToken(email);
 
-		String redirectUrl = "http://localhost:4200/auth?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8) + "&oauth2=success";
+		String redirectUrl = "https://quantity-measurement-app-frontend-ah4ly7xig.vercel.app/auth?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8) + "&oauth2=success";
 
 		response.sendRedirect(redirectUrl);
 	}
