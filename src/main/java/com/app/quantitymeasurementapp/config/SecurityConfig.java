@@ -54,7 +54,7 @@ public class SecurityConfig {
 			)
 			.oauth2Login(oauth -> oauth
 			        .successHandler(oAuth2AuthenticationSuccessHandler)
-			        .failureUrl("http://localhost:4200/auth?oauth2=failed")
+			        .failureUrl("https://quantity-measurement-app-frontend-ah4ly7xig.vercel.app/auth?oauth2=failed")
 			)
 			.sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.exceptionHandling(ex -> ex.authenticationEntryPoint(point));
