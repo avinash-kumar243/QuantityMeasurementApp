@@ -55,3 +55,10 @@ management:
 springdoc:
     swagger-ui:
         enabled: true
+        
+jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: ${JWT_EXPIRATION_MS}
+
+app:
+    frontend-url: ${FRONTEND_URL}
