@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: ${PORT:8080}
   forward-headers-strategy: framework
 
 
@@ -70,7 +70,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"   # expose all endpoints
+        include: health,info   # expose all endpoints
   endpoint:
     health:
       show-details: always
