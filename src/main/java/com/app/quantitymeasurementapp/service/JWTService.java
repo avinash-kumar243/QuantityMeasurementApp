@@ -3,6 +3,8 @@ package com.app.quantitymeasurementapp.service;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
@@ -13,18 +15,21 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTService {  // Perform JWT Token Related operations   // JWTService = generate JWT token and perform validation logic
 	
-	private static final String SECRET = "afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf";
-    private static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60 * 1000;
+	@Value("${jwt.secret}")
+    private String secret;
+
+    @Value("${jwt.expiration-ms}")
+    private long jwtTokenValidity;
 
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(String email) {
         return Jwts.builder()
                 .subject(email)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
+                .expiration(new Date(System.currentTimeMillis() + jwtTokenValidity))
                 .signWith(getSigningKey())
                 .compact(); 
     }

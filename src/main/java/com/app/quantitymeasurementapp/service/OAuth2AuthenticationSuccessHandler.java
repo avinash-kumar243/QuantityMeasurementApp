@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -43,6 +44,9 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 	
 	private final AuthRepository authRepository;
 	private final JWTService jwtService;
+	
+	@Value("${app.frontend-url}")
+    private String frontendUrl;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -93,7 +97,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
 		String token = jwtService.generateToken(email);
 
-		String redirectUrl = "https://quantity-measurement-app-frontend-liard.vercel.app/auth?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8) + "&oauth2=success";
+		String redirectUrl = frontendUrl + "/auth?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8) + "&oauth2=success";
 
 		response.sendRedirect(redirectUrl);
 	}

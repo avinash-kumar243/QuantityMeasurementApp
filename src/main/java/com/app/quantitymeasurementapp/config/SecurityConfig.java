@@ -2,6 +2,7 @@ package com.app.quantitymeasurementapp.config;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,6 +41,9 @@ public class SecurityConfig {
 	private final AuthenticationEntryPoint point; 
 	private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 	
+	@Value("${app.frontend-url}")
+    private String frontendUrl;
+	
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -54,7 +58,7 @@ public class SecurityConfig {
 			)
 			.oauth2Login(oauth -> oauth
 			        .successHandler(oAuth2AuthenticationSuccessHandler)
-			        .failureUrl("https://quantity-measurement-app-frontend-liard.vercel.app/auth?oauth2=failed")
+			        .failureUrl(frontendUrl + "/auth?oauth2=failed")
 			)
 			.sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.exceptionHandling(ex -> ex.authenticationEntryPoint(point));
@@ -71,9 +75,7 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {	
 		CorsConfiguration configuration = new CorsConfiguration();
 		
-		configuration.setAllowedOrigins(Arrays.asList(
-			    "https://quantity-measurement-app-frontend-liard.vercel.app"
-		));
+		configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
 		
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		
